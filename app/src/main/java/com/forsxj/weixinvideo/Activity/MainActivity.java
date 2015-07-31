@@ -5,6 +5,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.internal.view.menu.MenuBuilder;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -18,7 +20,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
 {
-	private static final String[] TITLES = {"微信视频","存档目录"};
 	private List<Fragment> mFragments = new ArrayList<>();
 
 	@Override
@@ -26,8 +27,21 @@ public class MainActivity extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		initUI();
+	}
+
+	private void initUI()
+	{
+		//set toolbar
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		toolbar.setTitle(getResources().getString(R.string.app_name));
+		setSupportActionBar(toolbar);
+		MenuBuilder menuBuilder = new MenuBuilder(this);
+		toolbar.showOverflowMenu();//取代ActionBar
+		//set viewpager
 		ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 		initViewPager(viewPager);
+		//set tabLayout
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 		tabLayout.setFillViewport(true);
 		tabLayout.setupWithViewPager(viewPager);
@@ -51,13 +65,11 @@ public class MainActivity extends AppCompatActivity
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		int id = item.getItemId();
-		
 		//noinspection SimplifiableIfStatement
 		if (id == R.id.action_settings)
 		{
 			return true;
 		}
-		
 		return super.onOptionsItemSelected(item);
 	}
 }
