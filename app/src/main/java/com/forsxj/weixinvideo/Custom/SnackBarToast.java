@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 public class SnackBarToast
 {
-	private static final int SNACKBAR_TOAST_DEFAULT_BG_COLOR = 0x000000;
-	private static final int SNACKBAR_TOAST_DEFAULT_ACTIONTEXT_COLOR = 0x000000;
+	private static final int SNACKBAR_TOAST_DEFAULT_BG_COLOR = 0xFF039be5;
+	private static final int SNACKBAR_TOAST_DEFAULT_ACTIONTEXT_COLOR = 0xFFFFFFFF;
 
 	public static void showSnackBarToast(View view, String message,int backgroundColor, int textColor, int time)
 	{

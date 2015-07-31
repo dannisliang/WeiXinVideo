@@ -1,6 +1,7 @@
 package com.forsxj.weixinvideo.Activity;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.forsxj.weixinvideo.Adapter.VideoPagerAdapter;
 import com.forsxj.weixinvideo.Fragment.AllVideo_Fragment;
@@ -42,6 +44,16 @@ public class MainActivity extends AppCompatActivity
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 		tabLayout.setFillViewport(true);
 		tabLayout.setupWithViewPager(viewPager);
+		//set Fab
+		FloatingActionButton Fab = (FloatingActionButton) findViewById(R.id.Fab);
+		Fab.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+
+			}
+		});
 	}
 
 	private void initViewPager(ViewPager viewPager)

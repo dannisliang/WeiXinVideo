@@ -1,12 +1,15 @@
 package com.forsxj.weixinvideo.Fragment;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.forsxj.weixinvideo.Adapter.AllVideoAdapter;
@@ -52,11 +55,6 @@ public class AllVideo_Fragment extends Fragment
 	private void initVideoList()
 	{
 		String videoFolderPath = SDCardUtils.getInternalRootDirectoryPath() + "/tencent/MicroMsg/";
-		System.out.println(videoFolderPath);
-		if (new File(SDCardUtils.getInternalRootDirectoryPath()).exists())
-		{
-			System.out.println("exists");
-		}
 		File file_VideoFolderPath = new File(videoFolderPath);
 		ArrayList<File> videoPath_Found = new ArrayList<>();
 		if (file_VideoFolderPath.exists())
@@ -81,7 +79,6 @@ public class AllVideo_Fragment extends Fragment
 		}
 		if (videoPath_Found.size() == 0)
 		{
-			System.out.println("没有找到微信视频目录");
 			SnackBarToast.showDefaultSnackBarToast_Short(mListView,"没有找到微信视频目录！");
 			return;
 		}
@@ -94,9 +91,17 @@ public class AllVideo_Fragment extends Fragment
 	{
 		View view = inflater.inflate(R.layout.fragment_all_video, container, false);
 		mListView = (ListView) view.findViewById(R.id.listView_AllVideo);
+		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+		{
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+			{
+				Intent intent = new Intent(Intent.ACTION_VIEW);
+				intent.setDataAndType(Uri.parse(((VideoInfo) mListView.getAdapter().getItem(position)).getFileName()),"video/mp4");
+				startActivity(intent);
+			}
+		});
 		initVideoList();
 		return view;
 	}
-
-
 }
