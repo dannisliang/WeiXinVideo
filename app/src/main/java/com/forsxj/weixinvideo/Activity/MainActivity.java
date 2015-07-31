@@ -1,9 +1,11 @@
-package com.forsxj.weixinvideo;
+package com.forsxj.weixinvideo.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.forsxj.weixinvideo.R;
 
 public class MainActivity extends AppCompatActivity
 {

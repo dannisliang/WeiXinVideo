@@ -1,8 +1,10 @@
-package com.forsxj.weixinvideo;
+package com.forsxj.weixinvideo.Bean;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+import com.forsxj.weixinvideo.R;
 
 import java.io.Serializable;
 
@@ -20,7 +22,7 @@ public class VideoInfo implements Serializable
 		this.mVideoCover = videoCover;
 		if (videoCover == null)
 		{
-			this.mVideoCover = BitmapFactory.decodeResource(context.getResources(),R.mipmap.video);
+			this.mVideoCover = BitmapFactory.decodeResource(context.getResources(), R.mipmap.video);
 		}
 		else
 		{

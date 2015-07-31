@@ -1,4 +1,4 @@
-package com.forsxj.weixinvideo;
+package com.forsxj.weixinvideo.WorkThread;
 
 import android.os.Handler;
 import android.os.Message;

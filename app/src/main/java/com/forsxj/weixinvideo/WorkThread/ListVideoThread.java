@@ -1,4 +1,4 @@
-package com.forsxj.weixinvideo;
+package com.forsxj.weixinvideo.WorkThread;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
+import com.forsxj.weixinvideo.Bean.VideoInfo;
 
 import java.io.File;
 import java.io.FileFilter;

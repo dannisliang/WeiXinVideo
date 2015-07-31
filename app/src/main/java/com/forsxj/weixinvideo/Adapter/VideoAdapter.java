@@ -1,4 +1,4 @@
-package com.forsxj.weixinvideo;
+package com.forsxj.weixinvideo.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.forsxj.weixinvideo.R;
+import com.forsxj.weixinvideo.Bean.VideoInfo;
 
 import java.util.ArrayList;
 
