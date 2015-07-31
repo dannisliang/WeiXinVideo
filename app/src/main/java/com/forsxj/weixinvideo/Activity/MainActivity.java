@@ -5,7 +5,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.internal.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,9 +34,7 @@ public class MainActivity extends AppCompatActivity
 		//set toolbar
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		toolbar.setTitle(getResources().getString(R.string.app_name));
-		setSupportActionBar(toolbar);
-		MenuBuilder menuBuilder = new MenuBuilder(this);
-		toolbar.showOverflowMenu();//取代ActionBar
+		setSupportActionBar(toolbar);//取代ActionBar
 		//set viewpager
 		ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 		initViewPager(viewPager);
@@ -51,7 +48,7 @@ public class MainActivity extends AppCompatActivity
 	{
 		mFragments.add(new AllVideo_Fragment());
 		mFragments.add(new SavedVideo_Fragment());
-		viewPager.setAdapter(new VideoPagerAdapter(getSupportFragmentManager(),mFragments));
+		viewPager.setAdapter(new VideoPagerAdapter(getSupportFragmentManager(), mFragments));
 	}
 	
 	@Override

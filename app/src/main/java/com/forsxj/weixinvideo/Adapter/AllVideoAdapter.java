@@ -14,12 +14,12 @@ import com.forsxj.weixinvideo.Bean.VideoInfo;
 
 import java.util.ArrayList;
 
-public class VideoAdapter extends BaseAdapter
+public class AllVideoAdapter extends BaseAdapter
 {
 	private LayoutInflater mLayoutInflater;
 	private ArrayList<VideoInfo> mVideoInfoList = new ArrayList<>();
 
-	public VideoAdapter(Context context, ArrayList<VideoInfo> videoInfoList)
+	public AllVideoAdapter(Context context, ArrayList<VideoInfo> videoInfoList)
 	{
 		this.mVideoInfoList = videoInfoList;
 		mLayoutInflater = LayoutInflater.from(context);
