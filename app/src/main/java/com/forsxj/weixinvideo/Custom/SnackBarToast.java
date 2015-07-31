@@ -37,8 +37,8 @@ public class SnackBarToast
 	{
 		showSnackBarToast(view,
 				message,
-				view.getResources().getColor(SNACKBAR_TOAST_DEFAULT_BG_COLOR),
-				view.getResources().getColor(SNACKBAR_TOAST_DEFAULT_ACTIONTEXT_COLOR),
+				SNACKBAR_TOAST_DEFAULT_BG_COLOR,
+				SNACKBAR_TOAST_DEFAULT_ACTIONTEXT_COLOR,
 				Snackbar.LENGTH_LONG);
 	}
 
@@ -46,8 +46,8 @@ public class SnackBarToast
 	{
 		showSnackBarToast(view,
 				message,
-				view.getResources().getColor(SNACKBAR_TOAST_DEFAULT_BG_COLOR),
-				view.getResources().getColor(SNACKBAR_TOAST_DEFAULT_ACTIONTEXT_COLOR),
+				SNACKBAR_TOAST_DEFAULT_BG_COLOR,
+				SNACKBAR_TOAST_DEFAULT_ACTIONTEXT_COLOR,
 				Snackbar.LENGTH_SHORT);
 	}
 }
