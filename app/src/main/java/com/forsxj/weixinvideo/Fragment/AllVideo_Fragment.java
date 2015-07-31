@@ -52,8 +52,10 @@ public class AllVideo_Fragment extends Fragment
 	{
 		View view = inflater.inflate(R.layout.fragment_all_video, container, false);
 		mListView = (ListView) view.findViewById(R.id.listView_AllVideo);
+
 //		new ListVideoThread(this,mVideoListHandler,mVideoInfos);
 		return view;
 	}
+
 
 }
