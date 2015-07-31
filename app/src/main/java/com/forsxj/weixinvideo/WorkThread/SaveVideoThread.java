@@ -3,7 +3,7 @@ package com.forsxj.weixinvideo.WorkThread;
 import android.os.Handler;
 import android.os.Message;
 
-import com.forsxj.saveweixinvideo_utils.SDCardUtils;
+import com.forsxj.weixinvideo.Custom.SDCardUtils;
 
 import java.io.File;
 import java.io.FileInputStream;

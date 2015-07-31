@@ -22,7 +22,7 @@ public class VideoInfo implements Serializable
 		this.mVideoCover = videoCover;
 		if (videoCover == null)
 		{
-			this.mVideoCover = BitmapFactory.decodeResource(context.getResources(), R.mipmap.video);
+			this.mVideoCover = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
 		}
 		else
 		{

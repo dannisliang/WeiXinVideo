@@ -1,26 +1,48 @@
 package com.forsxj.weixinvideo.Activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.forsxj.weixinvideo.Adapter.VideoPagerAdapter;
+import com.forsxj.weixinvideo.Fragment.AllVideo_Fragment;
+import com.forsxj.weixinvideo.Fragment.SavedVideo_Fragment;
 import com.forsxj.weixinvideo.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
 {
-	
+	private static final String[] TITLES = {"微信视频","存档目录"};
+	private List<Fragment> mFragments = new ArrayList<>();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+		initViewPager(viewPager);
+		TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+		tabLayout.setFillViewport(true);
+		tabLayout.setupWithViewPager(viewPager);
+	}
+
+	private void initViewPager(ViewPager viewPager)
+	{
+		mFragments.add(new AllVideo_Fragment());
+		mFragments.add(new SavedVideo_Fragment());
+		viewPager.setAdapter(new VideoPagerAdapter(getSupportFragmentManager(),mFragments));
 	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_main, menu);
 		return true;
 	}
@@ -28,9 +50,6 @@ public class MainActivity extends AppCompatActivity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		
 		//noinspection SimplifiableIfStatement
