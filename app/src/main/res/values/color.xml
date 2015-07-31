@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="Snackbar_Toast_Default_BG">#000000</color>
+    <color name="Tab_Background">#08af08</color>
+
+</resources>
