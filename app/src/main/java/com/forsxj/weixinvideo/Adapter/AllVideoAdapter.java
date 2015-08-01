@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.forsxj.weixinvideo.R;
 import com.forsxj.weixinvideo.Bean.VideoInfo;
 
@@ -18,11 +19,13 @@ public class AllVideoAdapter extends BaseAdapter
 {
 	private LayoutInflater mLayoutInflater;
 	private ArrayList<VideoInfo> mVideoInfoList = new ArrayList<>();
+	private Context mContext;
 
 	public AllVideoAdapter(Context context, ArrayList<VideoInfo> videoInfoList)
 	{
 		this.mVideoInfoList = videoInfoList;
 		mLayoutInflater = LayoutInflater.from(context);
+		mContext = context;
 	}
 
 	@Override
@@ -53,7 +56,8 @@ public class AllVideoAdapter extends BaseAdapter
 			viewHolder = new ViewHolder();
 			viewHolder.mImageView = (ImageView) convertView.findViewById(R.id.imageView);
 			viewHolder.mTextView_VideoName = (TextView) convertView.findViewById(R.id.textView_Name);
-			viewHolder.mTextView_VideoInfo = (TextView) convertView.findViewById(R.id.textView_Info);
+			viewHolder.mTextView_VideoSize = (TextView) convertView.findViewById(R.id.textView_Size);
+			viewHolder.mTextView_VideoTime = (TextView) convertView.findViewById(R.id.textView_Time);
 			viewHolder.mCheckBox = (CheckBox) convertView.findViewById(R.id.checkBox);
 			convertView.setTag(viewHolder);
 		}
@@ -61,9 +65,10 @@ public class AllVideoAdapter extends BaseAdapter
 		{
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
-		viewHolder.mImageView.setImageBitmap(mVideoInfoList.get(position).getVideoCover());
+		Glide.with(mContext).load(mVideoInfoList.get(position).getFileName()).asBitmap().into(viewHolder.mImageView);
 		viewHolder.mTextView_VideoName.setText(mVideoInfoList.get(position).getVideoName());
-		viewHolder.mTextView_VideoInfo.setText(mVideoInfoList.get(position).getVideoDetailInfo());
+		viewHolder.mTextView_VideoSize.setText(mVideoInfoList.get(position).getVideoSize());
+		viewHolder.mTextView_VideoTime.setText(mVideoInfoList.get(position).getVideoTime());
 		viewHolder.mCheckBox.setChecked(mVideoInfoList.get(position).getSelected());
 		viewHolder.mCheckBox.setOnClickListener(new View.OnClickListener()
 		{
@@ -92,7 +97,8 @@ public class AllVideoAdapter extends BaseAdapter
 	{
 		public ImageView mImageView;
 		public TextView mTextView_VideoName;
-		public TextView mTextView_VideoInfo;
+		public TextView mTextView_VideoSize;
+		public TextView mTextView_VideoTime;
 		public CheckBox mCheckBox;
 	}
 }

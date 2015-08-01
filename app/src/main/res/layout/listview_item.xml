@@ -22,14 +22,20 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:textSize="16dp"/>
-
+            android:singleLine="true"
+            android:textSize="14dp"/>
         <TextView
-            android:id="@+id/textView_Info"
+            android:id="@+id/textView_Time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:textSize="14dp"/>
+            android:textSize="12dp"/>
+        <TextView
+            android:id="@+id/textView_Size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textSize="12dp"/>
     </LinearLayout>
 
     <CheckBox

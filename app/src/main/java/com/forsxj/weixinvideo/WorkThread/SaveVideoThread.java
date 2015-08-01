@@ -3,7 +3,7 @@ package com.forsxj.weixinvideo.WorkThread;
 import android.os.Handler;
 import android.os.Message;
 
-import com.forsxj.weixinvideo.Custom.SDCardUtils;
+import com.forsxj.weixinvideo.Custom.Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,7 +36,7 @@ public class SaveVideoThread extends Thread
 
 	private boolean createOutputPath()
 	{
-		mOutput_Path = SDCardUtils.getInternalRootDirectoryPath() + "/" + OUTPUT_FOLDER;
+		mOutput_Path = Utils.getInternalRootDirectoryPath() + "/" + OUTPUT_FOLDER;
 		File file = new File(mOutput_Path);
 		if (!file.exists())
 		{

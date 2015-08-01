@@ -1,35 +1,22 @@
 package com.forsxj.weixinvideo.Bean;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
-import com.forsxj.weixinvideo.R;
-
 import java.io.Serializable;
+import java.util.Calendar;
 
 public class VideoInfo implements Serializable
 {
-	private String mFileName;
-	private Bitmap mVideoCover;
-	private String mVideoName;
-	private String mVideoDetailInfo;
+	private String mFileName;//全路径名称
+	private String mVideoName;//视频名称
+	private String mVideoSize;//文件大小
+	private Calendar mVideoTime;//文件创建时间，在复制文件后还原文件原始创建时间
 	private boolean mSelected;
 
-	public VideoInfo(Context context ,String fileName, Bitmap videoCover, String videoName, String videoInfo, boolean selected)
+	public VideoInfo(String fileName, String videoName, String videoSize, Calendar videoTime, boolean selected)
 	{
 		this.mFileName = fileName;
-		this.mVideoCover = videoCover;
-		if (videoCover == null)
-		{
-			this.mVideoCover = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
-		}
-		else
-		{
-			this.mVideoCover = videoCover;
-		}
 		this.mVideoName = videoName;
-		this.mVideoDetailInfo = videoInfo;
+		this.mVideoSize = videoSize;
+		this.mVideoTime = videoTime;
 		this.mSelected = selected;
 	}
 
@@ -38,19 +25,14 @@ public class VideoInfo implements Serializable
 		return mFileName;
 	}
 
-	public Bitmap getVideoCover()
-	{
-		return mVideoCover;
-	}
-
 	public String getVideoName()
 	{
 		return mVideoName;
 	}
 
-	public String getVideoDetailInfo()
+	public String getVideoSize()
 	{
-		return mVideoDetailInfo;
+		return mVideoSize;
 	}
 
 	public boolean getSelected()
@@ -66,6 +48,16 @@ public class VideoInfo implements Serializable
 	@Override
 	public String toString()
 	{
-		return "文件名："+getVideoName() + " 文件大小：" + getVideoDetailInfo();
+		return "文件名：" + getVideoName() + " 文件大小：" + getVideoSize();
+	}
+
+	public String getVideoTime()
+	{
+		return "文件时间：" + mVideoTime.get(Calendar.YEAR) + "/" +
+				String.valueOf(mVideoTime.get(Calendar.MONTH) + 1) + "/" +
+				mVideoTime.get(Calendar.DAY_OF_MONTH) + " " +
+				mVideoTime.get(Calendar.HOUR_OF_DAY) + ":" +
+				mVideoTime.get(Calendar.MINUTE) + ":" +
+				mVideoTime.get(Calendar.SECOND);
 	}
 }

@@ -15,8 +15,8 @@ import android.widget.ListView;
 import com.forsxj.weixinvideo.Adapter.AllVideoAdapter;
 import com.forsxj.weixinvideo.Bean.VideoInfo;
 import com.forsxj.weixinvideo.Custom.NoLeakHandler;
-import com.forsxj.weixinvideo.Custom.SDCardUtils;
 import com.forsxj.weixinvideo.Custom.SnackBarToast;
+import com.forsxj.weixinvideo.Custom.Utils;
 import com.forsxj.weixinvideo.R;
 import com.forsxj.weixinvideo.WorkThread.ListVideoThread;
 
@@ -54,7 +54,7 @@ public class AllVideo_Fragment extends Fragment
 
 	private void initVideoList()
 	{
-		String videoFolderPath = SDCardUtils.getInternalRootDirectoryPath() + "/tencent/MicroMsg/";
+		String videoFolderPath = Utils.getInternalRootDirectoryPath() + "/tencent/MicroMsg/";
 		File file_VideoFolderPath = new File(videoFolderPath);
 		ArrayList<File> videoPath_Found = new ArrayList<>();
 		if (file_VideoFolderPath.exists())
@@ -82,7 +82,7 @@ public class AllVideo_Fragment extends Fragment
 			SnackBarToast.showDefaultSnackBarToast_Short(mListView,"没有找到微信视频目录！");
 			return;
 		}
-		new ListVideoThread(getActivity(),mVideoListHandler,videoPath_Found).start();
+		new ListVideoThread(mVideoListHandler,videoPath_Found).start();
 	}
 
 	@Override
