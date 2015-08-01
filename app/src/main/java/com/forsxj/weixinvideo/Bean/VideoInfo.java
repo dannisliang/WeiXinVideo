@@ -32,7 +32,7 @@ public class VideoInfo implements Serializable
 
 	public String getVideoSize()
 	{
-		return mVideoSize;
+		return "文件大小：" + mVideoSize;
 	}
 
 	public boolean getSelected()

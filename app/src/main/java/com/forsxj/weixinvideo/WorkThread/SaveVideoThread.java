@@ -17,8 +17,8 @@ public class SaveVideoThread extends Thread
 	private Handler mHandler;
 	private boolean mFlag = false;
 	public static final int OUTPUT_FILE_SUCCESS = 20;
-	public static final int OUTPUT_FILE_GIVEUP = 21;
-	public static final int OUTPUT_FILE_FAILE = 22;
+	public static final int OUTPUT_FILE_CANCEL = 21;
+	public static final int OUTPUT_FILE_FAILED = 22;
 	public static final int OUTPUT_FILE_PROGRESS = 23;
 	private static final String OUTPUT_FOLDER = "WeiXin_Video_Output";
 	private static String mOutput_Path;
@@ -29,33 +29,22 @@ public class SaveVideoThread extends Thread
 		this.mHandler = handler;
 	}
 
-	public void stopOutPutFiles()
-	{
-		mFlag = true;
-	}
-
 	private boolean createOutputPath()
 	{
 		mOutput_Path = Utils.getInternalRootDirectoryPath() + "/" + OUTPUT_FOLDER;
 		File file = new File(mOutput_Path);
-		if (!file.exists())
-		{
-			return file.mkdir();
-		}
-		else
-		{
-			return true;
-		}
+		return file.exists() || file.mkdir();
 	}
 
 	private boolean copyFile(File srcFile)
 	{
 		FileInputStream fis = null;
 		RandomAccessFile dstFile = null;
+		File newFile = new File(mOutput_Path + "/" + srcFile.getName());
 		try
 		{
 			fis = new FileInputStream(srcFile);
-			dstFile = new RandomAccessFile(new File(mOutput_Path + "/" + srcFile.getName()),"rw");
+			dstFile = new RandomAccessFile(newFile,"rw");
 			dstFile.setLength(srcFile.length());
 			byte[] buffer = new byte[1024 * 10];
 			int length;
@@ -94,6 +83,7 @@ public class SaveVideoThread extends Thread
 				}
 			}
 		}
+		setSrcFileTimeToNewFile(srcFile,newFile);//将文件原始时间写入新文件
 		return true;
 	}
 
@@ -121,23 +111,38 @@ public class SaveVideoThread extends Thread
 	{
 		if (!createOutputPath())
 		{
-			sendMessage(OUTPUT_FILE_FAILE);
+			sendMessage(OUTPUT_FILE_FAILED);
 			return;
 		}
 		for (int i = 0; i < mSelectedFiles.size(); i++)
 		{
 			if (mFlag)
 			{
-				sendMessage(OUTPUT_FILE_GIVEUP);
+				sendMessage(OUTPUT_FILE_CANCEL);
 				return;
 			}
 			if (!copyFile(mSelectedFiles.get(i)))
 			{
-				sendMessage(OUTPUT_FILE_FAILE);
+				sendMessage(OUTPUT_FILE_FAILED);
 				return;
 			}
 			sendMessage(OUTPUT_FILE_PROGRESS, i, mSelectedFiles.size());
+
 		}
 		sendMessage(OUTPUT_FILE_SUCCESS);
+	}
+
+	//将文件原始时间写入新文件
+	private boolean setSrcFileTimeToNewFile(File srcFile, File newFile)
+	{
+		return (srcFile.isFile() && srcFile.exists() && srcFile.canRead()
+				&& newFile.isFile() && newFile.exists() && newFile.canWrite())
+				&& newFile.setLastModified(srcFile.lastModified());
+	}
+
+	//取消文件复制
+	public void cancel()
+	{
+		mFlag = true;
 	}
 }

@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class AllVideo_Fragment extends Fragment
 {
-	private ArrayList<VideoInfo> mVideoInfos = new ArrayList<>();
+	private ArrayList<VideoInfo> mVideoInfoList = new ArrayList<>();
 	private ListView mListView;
 	private VideoListHandler mVideoListHandler;
 
@@ -44,10 +44,20 @@ public class AllVideo_Fragment extends Fragment
 		@Override
 		public void handleMessage(Message msg, AllVideo_Fragment allVideo_fragment)
 		{
-			allVideo_fragment.mVideoInfos = (ArrayList<VideoInfo>) msg.getData().getSerializable(ListVideoThread.MSG_CONTENT_VIDEOINFO_LIST);
-			if (allVideo_fragment.mVideoInfos != null)
+			if (msg.arg1 == ListVideoThread.MSG_ARG_ALL_VIDEO)
 			{
-				allVideo_fragment.mListView.setAdapter(new AllVideoAdapter(allVideo_fragment.getActivity(),allVideo_fragment.mVideoInfos));
+				Object o = msg.getData().getSerializable(ListVideoThread.MSG_CONTENT_VIDEO_INFO_LIST);
+				if (o instanceof ArrayList<?> && ((ArrayList) o).size() > 0)
+				{
+					for (Object oo : (ArrayList) o)
+					{
+						if (oo instanceof VideoInfo)
+						{
+							allVideo_fragment.mVideoInfoList.add((VideoInfo) oo);
+						}
+					}
+					allVideo_fragment.mListView.setAdapter(new AllVideoAdapter(allVideo_fragment.getActivity(), allVideo_fragment.mVideoInfoList));
+				}
 			}
 		}
 	}
@@ -62,13 +72,13 @@ public class AllVideo_Fragment extends Fragment
 			File[] files = file_VideoFolderPath.listFiles();
 			if (files.length > 0)
 			{
-				for (int i = 0; i < files.length; i++)
+				for (File file1 : files)
 				{
-					if (files[i].isDirectory()
-							&& files[i].getName().length() == 32
-							&& files[i].canRead())
+					if (file1.isDirectory()
+							&& file1.getName().length() == 32
+							&& file1.canRead())
 					{
-						File file = new File(files[i].getAbsolutePath() + "/video");
+						File file = new File(file1.getAbsolutePath() + "/video");
 						if (file.exists() && file.isDirectory() && file.canRead())
 						{
 							videoPath_Found.add(file);
@@ -79,10 +89,10 @@ public class AllVideo_Fragment extends Fragment
 		}
 		if (videoPath_Found.size() == 0)
 		{
-			SnackBarToast.showDefaultSnackBarToast_Short(mListView,"没有找到微信视频目录！");
+			SnackBarToast.showDefaultSnackBarToast_Short(mListView, "没有找到微信视频目录！");
 			return;
 		}
-		new ListVideoThread(mVideoListHandler,videoPath_Found).start();
+		new ListVideoThread(mVideoListHandler, videoPath_Found, ListVideoThread.MSG_ARG_ALL_VIDEO).start();
 	}
 
 	@Override
@@ -97,7 +107,7 @@ public class AllVideo_Fragment extends Fragment
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 			{
 				Intent intent = new Intent(Intent.ACTION_VIEW);
-				intent.setDataAndType(Uri.parse(((VideoInfo) mListView.getAdapter().getItem(position)).getFileName()),"video/mp4");
+				intent.setDataAndType(Uri.parse(((VideoInfo) mListView.getAdapter().getItem(position)).getFileName()), "video/mp4");
 				startActivity(intent);
 			}
 		});
