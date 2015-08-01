@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.forsxj.weixinvideo.Adapter.AllVideoAdapter;
 import com.forsxj.weixinvideo.Bean.VideoInfo;
+import com.forsxj.weixinvideo.Custom.GetVideoInfoListFromMsg;
 import com.forsxj.weixinvideo.Custom.NoLeakHandler;
 import com.forsxj.weixinvideo.Custom.Utils;
 import com.forsxj.weixinvideo.R;
@@ -50,7 +51,6 @@ public class SavedVideo_Fragment extends Fragment
 		});
 		initVideoList();
 		return view;
-
 	}
 
 	private void initVideoList()
@@ -76,18 +76,8 @@ public class SavedVideo_Fragment extends Fragment
 		{
 			if (msg.arg1 == ListVideoThread.MSG_ARG_SAVED_VIDEO)
 			{
-				Object o = msg.getData().getSerializable(ListVideoThread.MSG_CONTENT_VIDEO_INFO_LIST);
-				if (o instanceof ArrayList<?> && ((ArrayList) o).size() > 0)
-				{
-					for (Object oo : (ArrayList) o)
-					{
-						if (oo instanceof VideoInfo)
-						{
-							savedVideo_fragment.mVideoInfoList.add((VideoInfo) oo);
-						}
-					}
-					savedVideo_fragment.mListView.setAdapter(new AllVideoAdapter(savedVideo_fragment.getActivity(), savedVideo_fragment.mVideoInfoList));
-				}
+				savedVideo_fragment.mVideoInfoList = GetVideoInfoListFromMsg.getVideoInfoListFromMsg(msg,ListVideoThread.MSG_CONTENT_VIDEO_INFO_LIST);
+				savedVideo_fragment.mListView.setAdapter(new AllVideoAdapter(savedVideo_fragment.getActivity(), savedVideo_fragment.mVideoInfoList));
 			}
 		}
 	}

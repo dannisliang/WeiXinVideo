@@ -67,4 +67,9 @@ public class Utils
 	{
 		return Utils.getInternalRootDirectoryPath() + OUTPUT_FOLDER;
 	}
+
+	public static String getWeiXinVideoPath()
+	{
+		return Utils.getInternalRootDirectoryPath() + "/tencent/MicroMsg/";
+	}
 }

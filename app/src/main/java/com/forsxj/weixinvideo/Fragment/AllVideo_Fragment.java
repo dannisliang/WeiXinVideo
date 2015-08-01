@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.forsxj.weixinvideo.Adapter.AllVideoAdapter;
 import com.forsxj.weixinvideo.Bean.VideoInfo;
+import com.forsxj.weixinvideo.Custom.GetVideoInfoListFromMsg;
 import com.forsxj.weixinvideo.Custom.NoLeakHandler;
 import com.forsxj.weixinvideo.Custom.SnackBarToast;
 import com.forsxj.weixinvideo.Custom.Utils;
@@ -46,25 +47,15 @@ public class AllVideo_Fragment extends Fragment
 		{
 			if (msg.arg1 == ListVideoThread.MSG_ARG_ALL_VIDEO)
 			{
-				Object o = msg.getData().getSerializable(ListVideoThread.MSG_CONTENT_VIDEO_INFO_LIST);
-				if (o instanceof ArrayList<?> && ((ArrayList) o).size() > 0)
-				{
-					for (Object oo : (ArrayList) o)
-					{
-						if (oo instanceof VideoInfo)
-						{
-							allVideo_fragment.mVideoInfoList.add((VideoInfo) oo);
-						}
-					}
-					allVideo_fragment.mListView.setAdapter(new AllVideoAdapter(allVideo_fragment.getActivity(), allVideo_fragment.mVideoInfoList));
-				}
+				allVideo_fragment.mVideoInfoList = GetVideoInfoListFromMsg.getVideoInfoListFromMsg(msg, ListVideoThread.MSG_CONTENT_VIDEO_INFO_LIST);
+				allVideo_fragment.mListView.setAdapter(new AllVideoAdapter(allVideo_fragment.getActivity(), allVideo_fragment.mVideoInfoList));
 			}
 		}
 	}
 
 	private void initVideoList()
 	{
-		String videoFolderPath = Utils.getInternalRootDirectoryPath() + "/tencent/MicroMsg/";
+		String videoFolderPath = Utils.getWeiXinVideoPath();
 		File file_VideoFolderPath = new File(videoFolderPath);
 		ArrayList<File> videoPath_Found = new ArrayList<>();
 		if (file_VideoFolderPath.exists())
