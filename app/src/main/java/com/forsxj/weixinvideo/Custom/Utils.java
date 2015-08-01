@@ -14,6 +14,8 @@ import java.security.NoSuchAlgorithmException;
 
 public class Utils
 {
+	private static final String OUTPUT_FOLDER = "/WeiXin_Video_Output/";
+
 	public static String getInternalRootDirectoryPath()
 	{
 		return Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -59,5 +61,10 @@ public class Utils
 			}
 		}
 		return value;
+	}
+
+	public static String getOutputPath()
+	{
+		return Utils.getInternalRootDirectoryPath() + OUTPUT_FOLDER;
 	}
 }

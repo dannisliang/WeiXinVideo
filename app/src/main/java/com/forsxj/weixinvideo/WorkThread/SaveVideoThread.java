@@ -20,7 +20,6 @@ public class SaveVideoThread extends Thread
 	public static final int OUTPUT_FILE_CANCEL = 21;
 	public static final int OUTPUT_FILE_FAILED = 22;
 	public static final int OUTPUT_FILE_PROGRESS = 23;
-	private static final String OUTPUT_FOLDER = "WeiXin_Video_Output";
 	private static String mOutput_Path;
 
 	public SaveVideoThread(ArrayList<File> selectedFiles, Handler handler)
@@ -31,7 +30,7 @@ public class SaveVideoThread extends Thread
 
 	private boolean createOutputPath()
 	{
-		mOutput_Path = Utils.getInternalRootDirectoryPath() + "/" + OUTPUT_FOLDER;
+		mOutput_Path = Utils.getOutputPath();
 		File file = new File(mOutput_Path);
 		return file.exists() || file.mkdir();
 	}
@@ -40,7 +39,7 @@ public class SaveVideoThread extends Thread
 	{
 		FileInputStream fis = null;
 		RandomAccessFile dstFile = null;
-		File newFile = new File(mOutput_Path + "/" + srcFile.getName());
+		File newFile = new File(mOutput_Path + srcFile.getName());
 		try
 		{
 			fis = new FileInputStream(srcFile);
@@ -83,7 +82,7 @@ public class SaveVideoThread extends Thread
 				}
 			}
 		}
-		setSrcFileTimeToNewFile(srcFile,newFile);//将文件原始时间写入新文件
+		setSrcFileTimeToNewFile(srcFile,newFile);//灏嗘枃浠跺師濮嬫椂闂村啓鍏ユ柊鏂囦欢
 		return true;
 	}
 
@@ -132,7 +131,7 @@ public class SaveVideoThread extends Thread
 		sendMessage(OUTPUT_FILE_SUCCESS);
 	}
 
-	//将文件原始时间写入新文件
+	//灏嗘枃浠跺師濮嬫椂闂村啓鍏ユ柊鏂囦欢
 	private boolean setSrcFileTimeToNewFile(File srcFile, File newFile)
 	{
 		return (srcFile.isFile() && srcFile.exists() && srcFile.canRead()
@@ -140,7 +139,7 @@ public class SaveVideoThread extends Thread
 				&& newFile.setLastModified(srcFile.lastModified());
 	}
 
-	//取消文件复制
+	//鍙栨秷鏂囦欢澶嶅埗
 	public void cancel()
 	{
 		mFlag = true;

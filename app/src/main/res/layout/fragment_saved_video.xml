@@ -4,5 +4,8 @@
              android:layout_height="match_parent"
              tools:context="com.forsxj.weixinvideo.Fragment.SavedVideo_Fragment">
 
-
+    <ListView
+        android:id="@+id/listView_SavedVideo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </FrameLayout>
