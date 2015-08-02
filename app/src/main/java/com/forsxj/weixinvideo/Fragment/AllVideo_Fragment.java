@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import com.forsxj.weixinvideo.Adapter.AllVideoAdapter;
 import com.forsxj.weixinvideo.Bean.VideoInfo;
+import com.forsxj.weixinvideo.Custom.CApplication;
 import com.forsxj.weixinvideo.Custom.GetVideoInfoListFromMsg;
 import com.forsxj.weixinvideo.Custom.NoLeakHandler;
 import com.forsxj.weixinvideo.Custom.SnackBarToast;
@@ -18,6 +19,7 @@ import com.forsxj.weixinvideo.Custom.VideoListFragment;
 import com.forsxj.weixinvideo.Interface.AllVideoListView_Method;
 import com.forsxj.weixinvideo.R;
 import com.forsxj.weixinvideo.WorkThread.ListVideoThread;
+import com.forsxj.weixinvideo.WorkThread.SaveVideoThread;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,6 +36,12 @@ public class AllVideo_Fragment extends VideoListFragment implements AllVideoList
 	}
 
 	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+	}
+
+	@Override
 	public ListView getListView()
 	{
 		return mListView;
@@ -42,7 +50,7 @@ public class AllVideo_Fragment extends VideoListFragment implements AllVideoList
 	@Override
 	public void saveSelected()
 	{
-
+		new SaveVideoThread(getSelectedVideo(), CApplication.getMainHandler()).start();
 	}
 
 	@Override
@@ -110,5 +118,11 @@ public class AllVideo_Fragment extends VideoListFragment implements AllVideoList
 		mListView = (ListView) view.findViewById(R.id.listView_AllVideo);
 		initVideoList();
 		return view;
+	}
+
+	@Override
+	public void reLoadVideoList()
+	{
+		initVideoList();
 	}
 }

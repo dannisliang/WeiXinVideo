@@ -1,5 +1,6 @@
 package com.forsxj.weixinvideo.Custom;
 
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -24,7 +25,7 @@ public abstract class VideoListFragment extends Fragment
 			{
 				((VideoInfo)(getListView().getAdapter().getItem(i))).setSelected(true);
 			}
-			((BaseAdapter)(getListView().getAdapter())).notifyDataSetChanged();
+			updateListView();
 		}
 	}
 
@@ -36,8 +37,13 @@ public abstract class VideoListFragment extends Fragment
 			{
 				((VideoInfo)(getListView().getAdapter().getItem(i))).setSelected(false);
 			}
-			((BaseAdapter)(getListView().getAdapter())).notifyDataSetChanged();
+			updateListView();
 		}
+	}
+
+	private void updateListView()
+	{
+		((BaseAdapter)(getListView().getAdapter())).notifyDataSetChanged();
 	}
 
 	public void delSelected()
@@ -51,15 +57,7 @@ public abstract class VideoListFragment extends Fragment
 				return;
 			}
 			//获取选中的文件
-			final List<VideoInfo> selectedVideo = new ArrayList<>();
-			for (int i = 0; i < count; i++)
-			{
-				VideoInfo videoInfo = (VideoInfo)getListView().getAdapter().getItem(i);
-				if (videoInfo.getSelected())
-				{
-					selectedVideo.add(videoInfo);
-				}
-			}
+			final List<File> selectedVideo = getSelectedVideo();
 			//开始删除
 			if (selectedVideo.size() == 0)
 			{
@@ -71,14 +69,38 @@ public abstract class VideoListFragment extends Fragment
 				@Override
 				public void onClick(View v)
 				{
+					//开始删除时不允许打开菜单
 					for (int i = 0; i < selectedVideo.size(); i++)
 					{
-						File file = new File(selectedVideo.get(i).getFileName());
-						file.delete();
+						selectedVideo.get(i).delete();
 					}
+					reLoadVideoList();
 				}
 			});
 			snackbar.show();
 		}
+	}
+
+	abstract public void reLoadVideoList();
+
+	public Handler getMainHandler()
+	{
+		return CApplication.getMainHandler();
+	}
+
+	//获取选中的文件
+	public ArrayList<File> getSelectedVideo()
+	{
+		ArrayList<File> files = new ArrayList<>();
+		int count = getListView().getAdapter().getCount();
+		for (int i = 0; i < count; i++)
+		{
+			VideoInfo videoInfo = (VideoInfo)getListView().getAdapter().getItem(i);
+			if (videoInfo.getSelected())
+			{
+				files.add(new File(videoInfo.getFileName()));
+			}
+		}
+		return files;
 	}
 }

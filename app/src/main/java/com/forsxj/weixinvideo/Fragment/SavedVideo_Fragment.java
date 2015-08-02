@@ -25,6 +25,7 @@ public class SavedVideo_Fragment extends VideoListFragment
 	private ArrayList<VideoInfo> mVideoInfoList = new ArrayList<>();
 	private ListView mListView;
 	private VideoListHandler mVideoListHandler;
+
 	public SavedVideo_Fragment()
 	{
 		mVideoListHandler = new VideoListHandler(this);
@@ -72,5 +73,11 @@ public class SavedVideo_Fragment extends VideoListFragment
 				savedVideo_fragment.mListView.setAdapter(new AllVideoAdapter(savedVideo_fragment.getActivity(), savedVideo_fragment.mVideoInfoList));
 			}
 		}
+	}
+
+	@Override
+	public void reLoadVideoList()
+	{
+		initVideoList();
 	}
 }

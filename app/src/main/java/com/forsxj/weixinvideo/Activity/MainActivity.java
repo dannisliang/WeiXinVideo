@@ -2,6 +2,7 @@ package com.forsxj.weixinvideo.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.forsxj.weixinvideo.Adapter.VideoPagerAdapter;
+import com.forsxj.weixinvideo.Custom.CApplication;
+import com.forsxj.weixinvideo.Custom.NoLeakHandler;
 import com.forsxj.weixinvideo.Custom.VideoListFragment;
 import com.forsxj.weixinvideo.Fragment.AllVideo_Fragment;
 import com.forsxj.weixinvideo.Fragment.SavedVideo_Fragment;
@@ -28,12 +31,14 @@ public class MainActivity extends AppCompatActivity
 	private ViewPager mViewPager;
 	private FloatingActionButton mFab_save;
 	private FloatingActionButton mFab_sync;
-
+	private MainHandler mHandler;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		mHandler = new MainHandler(this);//初始化UI Handler
+		CApplication.setMainHandler(mHandler);
 		initUI();
 	}
 
@@ -154,4 +159,18 @@ public class MainActivity extends AppCompatActivity
 		return super.onOptionsItemSelected(item);
 	}
 
+	private static class MainHandler extends NoLeakHandler<MainActivity>
+	{
+
+		public MainHandler(MainActivity outClass)
+		{
+			super(outClass);
+		}
+
+		@Override
+		public void handleMessage(Message msg, MainActivity mainActivity)
+		{
+
+		}
+	}
 }
