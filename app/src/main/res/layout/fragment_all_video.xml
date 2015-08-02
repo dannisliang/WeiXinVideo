@@ -4,7 +4,7 @@
              android:layout_height="match_parent"
              tools:context="com.forsxj.weixinvideo.Fragment.AllVideo_Fragment">
 
-    <ListView
+    <com.forsxj.weixinvideo.Custom.VideoListView
         android:id="@+id/listView_AllVideo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

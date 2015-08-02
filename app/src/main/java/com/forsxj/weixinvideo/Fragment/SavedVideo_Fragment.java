@@ -1,15 +1,12 @@
 package com.forsxj.weixinvideo.Fragment;
 
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.forsxj.weixinvideo.Adapter.AllVideoAdapter;
@@ -39,16 +36,6 @@ public class SavedVideo_Fragment extends Fragment
 	{
 		View view =  inflater.inflate(R.layout.fragment_saved_video, container, false);
 		mListView = (ListView) view.findViewById(R.id.listView_SavedVideo);
-		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-		{
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-			{
-				Intent intent = new Intent(Intent.ACTION_VIEW);
-				intent.setDataAndType(Uri.parse(((VideoInfo) mListView.getAdapter().getItem(position)).getFileName()), "video/mp4");
-				startActivity(intent);
-			}
-		});
 		initVideoList();
 		return view;
 	}
