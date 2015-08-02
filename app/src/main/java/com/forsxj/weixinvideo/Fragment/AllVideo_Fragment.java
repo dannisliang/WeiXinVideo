@@ -3,7 +3,6 @@ package com.forsxj.weixinvideo.Fragment;
 
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +14,15 @@ import com.forsxj.weixinvideo.Custom.GetVideoInfoListFromMsg;
 import com.forsxj.weixinvideo.Custom.NoLeakHandler;
 import com.forsxj.weixinvideo.Custom.SnackBarToast;
 import com.forsxj.weixinvideo.Custom.Utils;
+import com.forsxj.weixinvideo.Custom.VideoListFragment;
+import com.forsxj.weixinvideo.Interface.AllVideoListView_Method;
 import com.forsxj.weixinvideo.R;
 import com.forsxj.weixinvideo.WorkThread.ListVideoThread;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class AllVideo_Fragment extends Fragment
+public class AllVideo_Fragment extends VideoListFragment implements AllVideoListView_Method
 {
 	private ArrayList<VideoInfo> mVideoInfoList = new ArrayList<>();
 	private ListView mListView;
@@ -30,6 +31,24 @@ public class AllVideo_Fragment extends Fragment
 	public AllVideo_Fragment()
 	{
 		mVideoListHandler = new VideoListHandler(this);
+	}
+
+	@Override
+	public ListView getListView()
+	{
+		return mListView;
+	}
+
+	@Override
+	public void saveSelected()
+	{
+
+	}
+
+	@Override
+	public void sync()
+	{
+
 	}
 
 	private static class VideoListHandler extends NoLeakHandler<AllVideo_Fragment>
