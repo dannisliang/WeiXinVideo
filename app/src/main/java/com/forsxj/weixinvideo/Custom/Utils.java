@@ -1,6 +1,9 @@
 package com.forsxj.weixinvideo.Custom;
 
+import android.content.Context;
 import android.os.Environment;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -71,5 +74,14 @@ public class Utils
 	public static String getWeiXinVideoPath()
 	{
 		return Utils.getInternalRootDirectoryPath() + "/tencent/MicroMsg/";
+	}
+
+	public static int getScreenHeight(Context context)
+	{
+		WindowManager wm = (WindowManager) context
+				.getSystemService(Context.WINDOW_SERVICE);
+		DisplayMetrics outMetrics = new DisplayMetrics();
+		wm.getDefaultDisplay().getMetrics(outMetrics);
+		return outMetrics.heightPixels;
 	}
 }

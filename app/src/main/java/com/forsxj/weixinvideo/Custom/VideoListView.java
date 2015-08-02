@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.forsxj.weixinvideo.Bean.VideoInfo;
 
-public class VideoListView extends ListView implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener
+public class VideoListView extends ListView implements AdapterView.OnItemClickListener,
+		AdapterView.OnItemLongClickListener,
+		AbsListView.OnScrollListener
 {
 	private Context mContext;
 
@@ -41,5 +44,17 @@ public class VideoListView extends ListView implements AdapterView.OnItemClickLi
 	{
 
 		return false;
+	}
+
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState)
+	{
+
+	}
+
+	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+	{
+
 	}
 }

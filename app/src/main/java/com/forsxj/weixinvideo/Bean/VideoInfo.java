@@ -53,7 +53,7 @@ public class VideoInfo implements Serializable
 
 	public String getVideoTime()
 	{
-		return "文件时间：" + mVideoTime.get(Calendar.YEAR) + "/" +
+		return "创建时间：" + mVideoTime.get(Calendar.YEAR) + "/" +
 				String.valueOf(mVideoTime.get(Calendar.MONTH) + 1) + "/" +
 				mVideoTime.get(Calendar.DAY_OF_MONTH) + " " +
 				mVideoTime.get(Calendar.HOUR_OF_DAY) + ":" +
