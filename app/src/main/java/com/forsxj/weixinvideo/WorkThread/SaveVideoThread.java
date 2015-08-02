@@ -126,7 +126,6 @@ public class SaveVideoThread extends Thread
 				return;
 			}
 			sendMessage(OUTPUT_FILE_PROGRESS, i, mSelectedFiles.size());
-
 		}
 		sendMessage(OUTPUT_FILE_SUCCESS);
 	}
