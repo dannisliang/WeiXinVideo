@@ -172,7 +172,6 @@ public class MainActivity extends AppCompatActivity
 
 	private static class MainHandler extends NoLeakHandler<MainActivity>
 	{
-
 		public MainHandler(MainActivity outClass)
 		{
 			super(outClass);
@@ -200,18 +199,15 @@ public class MainActivity extends AppCompatActivity
 					mainActivity.showProgressBar(msg.arg1);
 					break;
 				case SaveVideoThread.OUTPUT_FILE_SUCCESS:
-					mainActivity.closeProgressBar();
-					mainActivity.mFragments.get(1).reLoadVideoList(false);
+					mainActivity.reSet();
 					SnackBarToast.showDefaultSnackBarToast_Short(mainActivity.mFab_menu, mainActivity.getString(R.string.Output_Successed));
 					break;
 				case SaveVideoThread.OUTPUT_FILE_CANCEL:
-					mainActivity.closeProgressBar();
-					mainActivity.mFragments.get(1).reLoadVideoList(false);
+					mainActivity.reSet();
 					SnackBarToast.showDefaultSnackBarToast_Short(mainActivity.mFab_menu, mainActivity.getString(R.string.Output_Canceled));
 					break;
 				case SaveVideoThread.OUTPUT_FILE_FAILED:
-					mainActivity.closeProgressBar();
-					mainActivity.mFragments.get(1).reLoadVideoList(false);
+					mainActivity.reSet();
 					SnackBarToast.showDefaultSnackBarToast_Short(mainActivity.mFab_menu,mainActivity.getString(R.string.Output_Failed));
 					break;
 				case SaveVideoThread.OUTPUT_FILE_PROGRESS:
@@ -219,6 +215,13 @@ public class MainActivity extends AppCompatActivity
 					break;
 			}
 		}
+	}
+
+	private void reSet()
+	{
+		closeProgressBar();
+		mFragments.get(1).reLoadVideoList(false);
+		mFragments.get(0).cancelAll();
 	}
 
 	public void showProgressBar(int totle)

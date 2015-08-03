@@ -95,7 +95,7 @@ public abstract class VideoListFragment extends Fragment
 								}
 							}
 							reLoadVideoList(false);
-							if (j == 0)
+							if (j != 0)
 							{
 								SnackBarToast.showDefaultSnackBarToast_Short(v, "有" + j + "个文件删除失败！");
 								return;

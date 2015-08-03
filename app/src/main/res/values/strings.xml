@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">微信视频保存器</string>
+    <string name="app_name">微信视频挖掘器</string>
     <string name="action_settings">设置</string>
     <string name="title_activity_setting">SettingActivity</string>
     <string name="OK">确定</string>
