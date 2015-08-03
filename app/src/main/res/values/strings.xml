@@ -2,9 +2,21 @@
     <string name="app_name">微信视频保存器</string>
     <string name="action_settings">设置</string>
     <string name="title_activity_setting">SettingActivity</string>
+    <string name="OK">确定</string>
+    <string name="Please_Select_Output_Video">请选择要导出的视频！</string>
+    <string name="Video_Folder_NoFound">没有找到微信视频目录！</string>
+    <string name="No_VideoFile_To_Delete">没有可供删除的文件！</string>
+    <string name="No_VideoFile_Select">没有选中文件！</string>
+    <string name="Sure_To_Delete">确定要删除吗？</string>
+    <string name="Sure_To_Quit">确定要退出程序吗？</string>
 
-    <string name="ViewPager_Title_0">微信视频</string>
-    <string name="ViewPager_Title_1">存档目录</string>
+    <string name="Output_Failed">导出操作失败！</string>
+    <string name="Output_Canceled">导出操作已取消！</string>
+    <string name="Output_Successed">所选视频导出完成！</string>
+
+    <string name="File_Name">文件名：</string>
+    <string name="File_Time">创建时间：</string>
+    <string name="File_Size">文件大小：</string>
 
     <array name="ViewPager_Titles">
         <item>微信视频</item>

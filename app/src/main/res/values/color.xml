@@ -8,4 +8,17 @@
     <color name="SnackBar_Background">#039be5</color>
     <color name="SnackBar_Message">#FFFFFF</color>
     <color name="SnackBar_ActionText">#f4511e</color>
+
+    <color name="FabMenu_Del_Nor">#DA4336</color>
+    <color name="FabMenu_Del_Press">#E75043</color>
+    <color name="FabMenu_SelectAll_Nor">#00897b</color>
+    <color name="FabMenu_SelectAll_Press">#00695c</color>
+    <color name="FabMenu_CancelAll_Nor">#cddc39</color>
+    <color name="FabMenu_CancelAll_Press">#afb42b</color>
+    <color name="FabMenu_Save_Nor">#039be5</color>
+    <color name="FabMenu_Save_Press">#0277bd</color>
+    <color name="FabMenu_Sync_Nor">#5e35b1</color>
+    <color name="FabMenu_Sync_Press">#4527a0</color>
+    <color name="FabMenu_Update_Nor">#0a8f08</color>
+    <color name="FabMenu_Update_Press">#056f00</color>
 </resources>

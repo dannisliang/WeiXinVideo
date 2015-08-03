@@ -48,7 +48,7 @@ public class SavedVideo_Fragment extends VideoListFragment
 		{
 			ArrayList<File> videoPath_list = new ArrayList<>();
 			videoPath_list.add(file);
-			new ListVideoThread(mVideoListHandler, videoPath_list, Utils.MSG_ARG_SAVED_VIDEO).start();
+			new ListVideoThread(getActivity(), mVideoListHandler, videoPath_list, Utils.MSG_ARG_SAVED_VIDEO).start();
 		}
 	}
 

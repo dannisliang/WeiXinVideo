@@ -50,6 +50,11 @@ public class AllVideo_Fragment extends VideoListFragment implements AllVideoList
 	@Override
 	public void saveSelected()
 	{
+		if (getSelectedVideo().size() == 0)
+		{
+			SnackBarToast.showDefaultSnackBarToast_Short(mListView, getString(R.string.Please_Select_Output_Video));
+			return;
+		}
 		new SaveVideoThread(getSelectedVideo(), CApplication.getMainHandler()).start();
 	}
 
@@ -105,10 +110,10 @@ public class AllVideo_Fragment extends VideoListFragment implements AllVideoList
 		}
 		if (videoPath_Found.size() == 0)
 		{
-			SnackBarToast.showDefaultSnackBarToast_Short(mListView, "没有找到微信视频目录！");
+			SnackBarToast.showDefaultSnackBarToast_Short(mListView, getString(R.string.Video_Folder_NoFound));
 			return;
 		}
-		new ListVideoThread(mVideoListHandler, videoPath_Found, Utils.MSG_ARG_ALL_VIDEO).start();
+		new ListVideoThread(getActivity(), mVideoListHandler, videoPath_Found, Utils.MSG_ARG_ALL_VIDEO).start();
 	}
 
 	@Override

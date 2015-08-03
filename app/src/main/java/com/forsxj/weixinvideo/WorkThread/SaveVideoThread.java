@@ -20,6 +20,7 @@ public class SaveVideoThread extends Thread
 	public static final int OUTPUT_FILE_CANCEL = 21;
 	public static final int OUTPUT_FILE_FAILED = 22;
 	public static final int OUTPUT_FILE_PROGRESS = 23;
+	public static final int OUTPUT_FILE_START = 24;
 	private static String mOutput_Path;
 
 	public SaveVideoThread(ArrayList<File> selectedFiles, Handler handler)
@@ -82,7 +83,7 @@ public class SaveVideoThread extends Thread
 				}
 			}
 		}
-		setSrcFileTimeToNewFile(srcFile,newFile);//将文件原始时间写入新文件
+		setSrcFileTimeToNewFile(srcFile, newFile);//将文件原始时间写入新文件
 		return true;
 	}
 
@@ -93,7 +94,7 @@ public class SaveVideoThread extends Thread
 
 	private void sendMessage(int what, int arg1)
 	{
-		sendMessage(what,arg1,-1);
+		sendMessage(what, arg1, -1);
 	}
 
 	private void sendMessage(int what, int arg1, int arg2)
@@ -113,21 +114,28 @@ public class SaveVideoThread extends Thread
 			sendMessage(OUTPUT_FILE_FAILED);
 			return;
 		}
+
 		for (int i = 0; i < mSelectedFiles.size(); i++)
 		{
 			if (mFlag)
 			{
-				sendMessage(OUTPUT_FILE_CANCEL);
+				sendMessage(OUTPUT_FILE_CANCEL,mSelectedFiles.size());
 				return;
+			}
+			//开始复制的时候
+			if (i == 0)
+			{
+				sendMessage(OUTPUT_FILE_START);
 			}
 			if (!copyFile(mSelectedFiles.get(i)))
 			{
-				sendMessage(OUTPUT_FILE_FAILED);
+				sendMessage(OUTPUT_FILE_FAILED);//复制失败
 				return;
 			}
-			sendMessage(OUTPUT_FILE_PROGRESS, i, mSelectedFiles.size());
+			//更新复制文件进度
+			sendMessage(OUTPUT_FILE_PROGRESS, i);
 		}
-		sendMessage(OUTPUT_FILE_SUCCESS);
+		sendMessage(OUTPUT_FILE_SUCCESS);//复制文件成功
 	}
 
 	//将文件原始时间写入新文件

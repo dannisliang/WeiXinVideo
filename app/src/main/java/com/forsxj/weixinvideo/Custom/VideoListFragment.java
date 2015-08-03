@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.forsxj.weixinvideo.Bean.VideoInfo;
+import com.forsxj.weixinvideo.R;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,6 +23,12 @@ public abstract class VideoListFragment extends Fragment
 
 	abstract public int getArg();
 
+	public VideoListFragment()
+	{
+		updateTitle();//初始化时getlistview会为null
+	}
+
+	//选择全部
 	public void selectAll()
 	{
 		if (getListView() != null && getListView().getAdapter() != null)
@@ -34,6 +41,7 @@ public abstract class VideoListFragment extends Fragment
 		}
 	}
 
+	//取消选择全部
 	public void cancelAll()
 	{
 		if (getListView() != null && getListView().getAdapter() != null)
@@ -46,12 +54,14 @@ public abstract class VideoListFragment extends Fragment
 		}
 	}
 
+	//更新Listview和标题
 	private void updateListView()
 	{
 		((BaseAdapter) (getListView().getAdapter())).notifyDataSetChanged();
 		updateTitle();
 	}
 
+	//删除所选
 	public void delSelected()
 	{
 		if (getListView() != null && getListView().getAdapter() != null)
@@ -59,7 +69,7 @@ public abstract class VideoListFragment extends Fragment
 			int count = getListView().getAdapter().getCount();
 			if (count == 0)
 			{
-				SnackBarToast.showDefaultSnackBarToast_Short(getListView(), "没有可供删除的文件！");
+				SnackBarToast.showDefaultSnackBarToast_Short(getListView(), getString(R.string.No_VideoFile_To_Delete));
 				return;
 			}
 			//获取选中的文件
@@ -67,23 +77,24 @@ public abstract class VideoListFragment extends Fragment
 			//开始删除
 			if (selectedVideo.size() == 0)
 			{
-				SnackBarToast.showDefaultSnackBarToast_Short(getListView(), "没有选中文件！");
+				SnackBarToast.showDefaultSnackBarToast_Short(getListView(), getString(R.string.No_VideoFile_Select));
 				return;
 			}
-			Snackbar snackbar = Snackbar.make(getListView(), "确定要删除吗？", Snackbar.LENGTH_SHORT).setAction("确定", new View.OnClickListener()
-			{
-				@Override
-				public void onClick(View v)
-				{
-					//开始删除时不允许打开菜单
-					for (int i = 0; i < selectedVideo.size(); i++)
+			Snackbar snackbar = Snackbar.make(getListView(), getString(R.string.Sure_To_Delete), Snackbar.LENGTH_SHORT)
+					.setAction(getActivity().getString(R.string.OK), new View.OnClickListener()
 					{
-						selectedVideo.get(i).delete();
-					}
-					reLoadVideoList();
-					updateTitle();
-				}
-			});
+						@Override
+						public void onClick(View v)
+						{
+							//开始删除时不允许打开菜单
+							for (int i = 0; i < selectedVideo.size(); i++)
+							{
+								selectedVideo.get(i).delete();
+							}
+							reLoadVideoList();
+							updateTitle();
+						}
+					});
 			snackbar.show();
 		}
 	}
@@ -97,13 +108,16 @@ public abstract class VideoListFragment extends Fragment
 	public ArrayList<File> getSelectedVideo()
 	{
 		ArrayList<File> files = new ArrayList<>();
-		int count = getListView().getAdapter().getCount();
-		for (int i = 0; i < count; i++)
+		if (getListView() != null && getListView().getAdapter() != null)
 		{
-			VideoInfo videoInfo = (VideoInfo) getListView().getAdapter().getItem(i);
-			if (videoInfo.getSelected())
+			int count = getListView().getAdapter().getCount();
+			for (int i = 0; i < count; i++)
 			{
-				files.add(new File(videoInfo.getFileName()));
+				VideoInfo videoInfo = (VideoInfo) getListView().getAdapter().getItem(i);
+				if (videoInfo.getSelected())
+				{
+					files.add(new File(videoInfo.getFileName()));
+				}
 			}
 		}
 		return files;
@@ -116,7 +130,7 @@ public abstract class VideoListFragment extends Fragment
 		message_ui.what = Utils.MSG_ACTION_UPDATE_TITLES;
 		message_ui.arg1 = getArg();
 		int selectedCount = getSelectedVideo().size();
-		int totleCount = getListView().getAdapter() == null ? 0 : getListView().getAdapter().getCount();
+		int totleCount = (getListView() == null || getListView().getAdapter() == null) ? 0 : getListView().getAdapter().getCount();
 		message_ui.obj = "(" + selectedCount + "/" + totleCount + ")";
 		message_ui.sendToTarget();
 	}

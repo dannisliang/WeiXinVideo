@@ -16,11 +16,13 @@ import android.widget.TextView;
 import com.forsxj.weixinvideo.Adapter.VideoPagerAdapter;
 import com.forsxj.weixinvideo.Custom.CApplication;
 import com.forsxj.weixinvideo.Custom.NoLeakHandler;
+import com.forsxj.weixinvideo.Custom.SnackBarToast;
 import com.forsxj.weixinvideo.Custom.Utils;
 import com.forsxj.weixinvideo.Custom.VideoListFragment;
 import com.forsxj.weixinvideo.Fragment.AllVideo_Fragment;
 import com.forsxj.weixinvideo.Fragment.SavedVideo_Fragment;
 import com.forsxj.weixinvideo.R;
+import com.forsxj.weixinvideo.WorkThread.SaveVideoThread;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity
 	private ViewPager mViewPager;
 	private FloatingActionButton mFab_save;
 	private FloatingActionButton mFab_sync;
-	private MainHandler mHandler;
+	private FloatingActionButton mFab_update;
 	private TabLayout mTabLayout;
 
 	@Override
@@ -42,8 +44,7 @@ public class MainActivity extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		mHandler = new MainHandler(this);//初始化UI Handler
-		CApplication.setMainHandler(mHandler);
+		CApplication.setMainHandler(new MainHandler(this));
 		initUI();
 	}
 
@@ -51,16 +52,18 @@ public class MainActivity extends AppCompatActivity
 	{
 		//findviewById
 		mFab_menu = (FloatingActionMenu) findViewById(R.id.Fab_menu);
+		mFab_menu.setClosedOnTouchOutside(true);
 		FloatingActionButton Fab_del = (FloatingActionButton) findViewById(R.id.menu_item_del);
 		FloatingActionButton Fab_selectAll = (FloatingActionButton) findViewById(R.id.menu_item_selectAll);
 		FloatingActionButton Fab_cancelAll = (FloatingActionButton) findViewById(R.id.menu_item_cancelAll);
 		mFab_save = (FloatingActionButton) findViewById(R.id.menu_item_save);
 		mFab_sync = (FloatingActionButton) findViewById(R.id.menu_item_sync);
+		mFab_update = (FloatingActionButton) findViewById(R.id.menu_item_update);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		mViewPager = (ViewPager) findViewById(R.id.viewPager);
 		mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
 		//set toolbar
-		toolbar.setTitle(getResources().getString(R.string.app_name));
+		toolbar.setTitle(getString(R.string.app_name));
 		setSupportActionBar(toolbar);//取代ActionBar
 		//set viewpager
 		initViewPager(mViewPager);
@@ -104,6 +107,9 @@ public class MainActivity extends AppCompatActivity
 						((AllVideo_Fragment) (mFragments.get(which_listView))).sync();
 					}
 					break;
+				case R.id.menu_item_update:
+					mFragments.get(which_listView).reLoadVideoList();
+					break;
 			}
 			mFab_menu.close(true);
 		}
@@ -128,13 +134,14 @@ public class MainActivity extends AppCompatActivity
 				{
 					mFab_save.setVisibility(View.VISIBLE);
 					mFab_sync.setVisibility(View.VISIBLE);
+					mFab_update.setVisibility(View.VISIBLE);
 				}
 				else
 				{
 					mFab_save.setVisibility(View.GONE);
 					mFab_sync.setVisibility(View.GONE);
+					mFab_update.setVisibility(View.GONE);
 				}
-				mFab_menu.close(true);
 			}
 
 			@Override
@@ -192,15 +199,48 @@ public class MainActivity extends AppCompatActivity
 						mainActivity.mFragments.get(msg.arg1).updateTitle();
 					}
 					break;
+				case SaveVideoThread.OUTPUT_FILE_START:
+					mainActivity.showProgressBar(msg.arg1);
+					break;
+				case SaveVideoThread.OUTPUT_FILE_SUCCESS:
+					mainActivity.closeProgressBar();
+					SnackBarToast.showDefaultSnackBarToast_Short(mainActivity.mFab_menu,mainActivity.getString(R.string.Output_Successed));
+					break;
+				case SaveVideoThread.OUTPUT_FILE_CANCEL:
+					mainActivity.closeProgressBar();
+					SnackBarToast.showDefaultSnackBarToast_Short(mainActivity.mFab_menu,mainActivity.getString(R.string.Output_Canceled));
+					break;
+				case SaveVideoThread.OUTPUT_FILE_FAILED:
+					mainActivity.closeProgressBar();
+					SnackBarToast.showDefaultSnackBarToast_Short(mainActivity.mFab_menu,mainActivity.getString(R.string.Output_Failed));
+					break;
+				case SaveVideoThread.OUTPUT_FILE_PROGRESS:
+					mainActivity.updateProgressBar(msg.arg1);
+					break;
 			}
 		}
+	}
+
+	public void showProgressBar(int totle)
+	{
+
+	}
+
+	public void closeProgressBar()
+	{
+
+	}
+
+	public void updateProgressBar(int progress)
+	{
+
 	}
 
 	@Override
 	public void onBackPressed()
 	{
-		Snackbar snackbar = Snackbar.make(mFab_menu, "确定要退出程序吗？", Snackbar.LENGTH_LONG).
-				setAction("确定", new View.OnClickListener()
+		Snackbar snackbar = Snackbar.make(mFab_menu, getString(R.string.Sure_To_Quit), Snackbar.LENGTH_LONG).
+				setAction(getString(R.string.OK), new View.OnClickListener()
 				{
 					@Override
 					public void onClick(View v)

@@ -2,6 +2,7 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:fab="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/RL_Main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context=".MainActivity">
@@ -40,8 +41,8 @@
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/Fab_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -87,6 +88,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_menu_delect"
+            app:fab_colorNormal="@color/FabMenu_Del_Nor"
+            app:fab_colorPressed="@color/FabMenu_Del_Press"
             fab:fab_label="删除所选"
             fab:fab_size="mini"/>
 
@@ -95,6 +98,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_menu_cancel_all"
+            app:fab_colorNormal="@color/FabMenu_CancelAll_Nor"
+            app:fab_colorPressed="@color/FabMenu_CancelAll_Press"
             fab:fab_label="全不选"
             fab:fab_size="mini"/>
 
@@ -103,6 +108,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_menu_select_all"
+            app:fab_colorNormal="@color/FabMenu_SelectAll_Nor"
+            app:fab_colorPressed="@color/FabMenu_SelectAll_Press"
             fab:fab_label="全选"
             fab:fab_size="mini"/>
 
@@ -111,6 +118,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_menu_save"
+            app:fab_colorNormal="@color/FabMenu_Save_Nor"
+            app:fab_colorPressed="@color/FabMenu_Save_Press"
             fab:fab_label="保存所选"
             fab:fab_size="mini"/>
 
@@ -119,7 +128,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_menu_sync"
-            fab:fab_label="同步"
+            app:fab_colorNormal="@color/FabMenu_Sync_Nor"
+            app:fab_colorPressed="@color/FabMenu_Sync_Press"
+            fab:fab_label="全部同步至导出文件夹"
+            fab:fab_size="mini"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/menu_item_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_menu_update"
+            app:fab_colorNormal="@color/FabMenu_Update_Nor"
+            app:fab_colorPressed="@color/FabMenu_Update_Press"
+            fab:fab_label="更新列表"
             fab:fab_size="mini"/>
 
     </com.github.clans.fab.FloatingActionMenu>

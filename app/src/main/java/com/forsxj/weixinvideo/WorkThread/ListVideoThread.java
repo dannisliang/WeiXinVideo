@@ -1,5 +1,6 @@
 package com.forsxj.weixinvideo.WorkThread;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,13 +20,15 @@ public class ListVideoThread extends Thread
 	private ArrayList<File> mVideoFolders;
 	private Handler mHandler;
 	private int mArg;
+	private Context mContext;
 
 	//arg表示哪个ListView 0或1
-	public ListVideoThread(Handler handler, ArrayList<File> videoFolders, int arg)
+	public ListVideoThread(Context context, Handler handler, ArrayList<File> videoFolders, int arg)
 	{
 		this.mVideoFolders = videoFolders;
 		this.mHandler = handler;
 		this.mArg = arg;
+		this.mContext = context;
 	}
 
 	@Override
@@ -64,7 +67,7 @@ public class ListVideoThread extends Thread
 					{
 						e.printStackTrace();
 					}
-					VideoInfo videoInfo = new VideoInfo(videoFilename, videoName, videoSize, videoTime, false);
+					VideoInfo videoInfo = new VideoInfo(mContext, videoFilename, videoName, videoSize, videoTime, false);
 					videoInfoList.add(videoInfo);
 				}
 				//通知fragment绑定数据
