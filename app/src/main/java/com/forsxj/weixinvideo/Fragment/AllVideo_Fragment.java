@@ -69,10 +69,10 @@ public class AllVideo_Fragment extends VideoListFragment implements AllVideoList
 		@Override
 		public void handleMessage(Message msg, AllVideo_Fragment allVideo_fragment)
 		{
-			if (msg.arg1 == ListVideoThread.MSG_ARG_ALL_VIDEO)
+			if (msg.arg1 == Utils.MSG_ARG_ALL_VIDEO)
 			{
-				allVideo_fragment.mVideoInfoList = GetVideoInfoListFromMsg.getVideoInfoListFromMsg(msg, ListVideoThread.MSG_CONTENT_VIDEO_INFO_LIST);
-				allVideo_fragment.mListView.setAdapter(new AllVideoAdapter(allVideo_fragment.getActivity(), allVideo_fragment.mVideoInfoList));
+				allVideo_fragment.mVideoInfoList = GetVideoInfoListFromMsg.getVideoInfoListFromMsg(msg, Utils.MSG_CONTENT_VIDEO_INFO_LIST);
+				allVideo_fragment.mListView.setAdapter(new AllVideoAdapter(allVideo_fragment.getActivity(), allVideo_fragment.mVideoInfoList, Utils.MSG_ARG_ALL_VIDEO));
 				allVideo_fragment.updateTitle();
 			}
 		}
@@ -108,7 +108,7 @@ public class AllVideo_Fragment extends VideoListFragment implements AllVideoList
 			SnackBarToast.showDefaultSnackBarToast_Short(mListView, "没有找到微信视频目录！");
 			return;
 		}
-		new ListVideoThread(mVideoListHandler, videoPath_Found, ListVideoThread.MSG_ARG_ALL_VIDEO).start();
+		new ListVideoThread(mVideoListHandler, videoPath_Found, Utils.MSG_ARG_ALL_VIDEO).start();
 	}
 
 	@Override
@@ -130,6 +130,6 @@ public class AllVideo_Fragment extends VideoListFragment implements AllVideoList
 	@Override
 	public int getArg()
 	{
-		return ListVideoThread.MSG_ARG_ALL_VIDEO;
+		return Utils.MSG_ARG_ALL_VIDEO;
 	}
 }

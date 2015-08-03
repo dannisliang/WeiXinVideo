@@ -35,7 +35,7 @@ public class SavedVideo_Fragment extends VideoListFragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState)
 	{
-		View view =  inflater.inflate(R.layout.fragment_saved_video, container, false);
+		View view = inflater.inflate(R.layout.fragment_saved_video, container, false);
 		mListView = (ListView) view.findViewById(R.id.listView_SavedVideo);
 		initVideoList();
 		return view;
@@ -48,7 +48,7 @@ public class SavedVideo_Fragment extends VideoListFragment
 		{
 			ArrayList<File> videoPath_list = new ArrayList<>();
 			videoPath_list.add(file);
-			new ListVideoThread(mVideoListHandler, videoPath_list, ListVideoThread.MSG_ARG_SAVED_VIDEO).start();
+			new ListVideoThread(mVideoListHandler, videoPath_list, Utils.MSG_ARG_SAVED_VIDEO).start();
 		}
 	}
 
@@ -67,10 +67,13 @@ public class SavedVideo_Fragment extends VideoListFragment
 		@Override
 		public void handleMessage(Message msg, SavedVideo_Fragment savedVideo_fragment)
 		{
-			if (msg.arg1 == ListVideoThread.MSG_ARG_SAVED_VIDEO)
+			if (msg.arg1 == Utils.MSG_ARG_SAVED_VIDEO)
 			{
-				savedVideo_fragment.mVideoInfoList = GetVideoInfoListFromMsg.getVideoInfoListFromMsg(msg,ListVideoThread.MSG_CONTENT_VIDEO_INFO_LIST);
-				savedVideo_fragment.mListView.setAdapter(new AllVideoAdapter(savedVideo_fragment.getActivity(), savedVideo_fragment.mVideoInfoList));
+				savedVideo_fragment.mVideoInfoList = GetVideoInfoListFromMsg.getVideoInfoListFromMsg(msg, Utils.MSG_CONTENT_VIDEO_INFO_LIST);
+				savedVideo_fragment.mListView.setAdapter(
+						new AllVideoAdapter(savedVideo_fragment.getActivity(),
+								savedVideo_fragment.mVideoInfoList,
+								Utils.MSG_ARG_SAVED_VIDEO));
 				savedVideo_fragment.updateTitle();
 			}
 		}
@@ -85,6 +88,6 @@ public class SavedVideo_Fragment extends VideoListFragment
 	@Override
 	public int getArg()
 	{
-		return ListVideoThread.MSG_ARG_SAVED_VIDEO;
+		return Utils.MSG_ARG_SAVED_VIDEO;
 	}
 }

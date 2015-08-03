@@ -1,6 +1,7 @@
 package com.forsxj.weixinvideo.Adapter;
 
 import android.content.Context;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.forsxj.weixinvideo.Bean.VideoInfo;
+import com.forsxj.weixinvideo.Custom.CApplication;
+import com.forsxj.weixinvideo.Custom.Utils;
 import com.forsxj.weixinvideo.R;
 
 import java.util.ArrayList;
@@ -20,12 +23,14 @@ public class AllVideoAdapter extends BaseAdapter
 	private LayoutInflater mLayoutInflater;
 	private ArrayList<VideoInfo> mVideoInfoList = new ArrayList<>();
 	private Context mContext;
+	private int mArg;
 
-	public AllVideoAdapter(Context context, ArrayList<VideoInfo> videoInfoList)
+	public AllVideoAdapter(Context context, ArrayList<VideoInfo> videoInfoList, int arg)
 	{
 		this.mVideoInfoList = videoInfoList;
 		mLayoutInflater = LayoutInflater.from(context);
 		mContext = context;
+		mArg = arg;
 	}
 
 	@Override
@@ -76,7 +81,10 @@ public class AllVideoAdapter extends BaseAdapter
 			public void onClick(View v)
 			{
 				mVideoInfoList.get(position).setSelected(((CheckBox) v).isChecked());
-
+				Message message = CApplication.getMainHandler().obtainMessage();
+				message.arg1 = mArg;
+				message.what = Utils.MSG_ACTION_CALL_FRAGMENT_UPDATE;
+				message.sendToTarget();
 			}
 		});
 		return convertView;

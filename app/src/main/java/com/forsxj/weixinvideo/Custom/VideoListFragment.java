@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.forsxj.weixinvideo.Bean.VideoInfo;
-import com.forsxj.weixinvideo.WorkThread.ListVideoThread;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -114,7 +113,7 @@ public abstract class VideoListFragment extends Fragment
 	public void updateTitle()
 	{
 		Message message_ui = getMainHandler().obtainMessage();
-		message_ui.what = ListVideoThread.MSG_ACTION_UPDATE_TITLES;
+		message_ui.what = Utils.MSG_ACTION_UPDATE_TITLES;
 		message_ui.arg1 = getArg();
 		int selectedCount = getSelectedVideo().size();
 		int totleCount = getListView().getAdapter() == null ? 0 : getListView().getAdapter().getCount();

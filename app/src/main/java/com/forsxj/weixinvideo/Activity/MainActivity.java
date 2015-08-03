@@ -16,11 +16,11 @@ import android.widget.TextView;
 import com.forsxj.weixinvideo.Adapter.VideoPagerAdapter;
 import com.forsxj.weixinvideo.Custom.CApplication;
 import com.forsxj.weixinvideo.Custom.NoLeakHandler;
+import com.forsxj.weixinvideo.Custom.Utils;
 import com.forsxj.weixinvideo.Custom.VideoListFragment;
 import com.forsxj.weixinvideo.Fragment.AllVideo_Fragment;
 import com.forsxj.weixinvideo.Fragment.SavedVideo_Fragment;
 import com.forsxj.weixinvideo.R;
-import com.forsxj.weixinvideo.WorkThread.ListVideoThread;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
@@ -177,13 +177,21 @@ public class MainActivity extends AppCompatActivity
 		@Override
 		public void handleMessage(Message msg, MainActivity mainActivity)
 		{
-			if (msg.what == ListVideoThread.MSG_ACTION_UPDATE_TITLES)
+			switch (msg.what)
 			{
-				String[] titles = mainActivity.getResources().getStringArray(R.array.ViewPager_Titles);
-				if (titles != null && msg.arg1 <= titles.length - 1)
-				{
-					mainActivity.mTabLayout.getTabAt(msg.arg1).setText(titles[msg.arg1] + msg.obj);
-				}
+				case Utils.MSG_ACTION_UPDATE_TITLES:
+					String[] titles = mainActivity.getResources().getStringArray(R.array.ViewPager_Titles);
+					if (titles != null && msg.arg1 <= titles.length - 1)
+					{
+						mainActivity.mTabLayout.getTabAt(msg.arg1).setText(titles[msg.arg1] + msg.obj);
+					}
+					break;
+				case Utils.MSG_ACTION_CALL_FRAGMENT_UPDATE:
+					if (msg.arg1 <= mainActivity.mFragments.size())
+					{
+						mainActivity.mFragments.get(msg.arg1).updateTitle();
+					}
+					break;
 			}
 		}
 	}
