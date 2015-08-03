@@ -18,7 +18,7 @@ import java.util.List;
 public abstract class VideoListFragment extends Fragment
 {
 	abstract public ListView getListView();
-	abstract public void reLoadVideoList();
+	abstract public void reLoadVideoList(boolean update);
 	abstract public int getArg();
 
 	public VideoListFragment()
@@ -89,7 +89,7 @@ public abstract class VideoListFragment extends Fragment
 							{
 								selectedVideo.get(i).delete();
 							}
-							reLoadVideoList();
+							reLoadVideoList(true);
 							updateTitle();
 						}
 					});

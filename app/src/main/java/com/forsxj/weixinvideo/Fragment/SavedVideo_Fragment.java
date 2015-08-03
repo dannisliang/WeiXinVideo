@@ -12,6 +12,7 @@ import com.forsxj.weixinvideo.Adapter.AllVideoAdapter;
 import com.forsxj.weixinvideo.Bean.VideoInfo;
 import com.forsxj.weixinvideo.Custom.GetVideoInfoListFromMsg;
 import com.forsxj.weixinvideo.Custom.NoLeakHandler;
+import com.forsxj.weixinvideo.Custom.SnackBarToast;
 import com.forsxj.weixinvideo.Custom.Utils;
 import com.forsxj.weixinvideo.Custom.VideoListFragment;
 import com.forsxj.weixinvideo.R;
@@ -37,18 +38,18 @@ public class SavedVideo_Fragment extends VideoListFragment
 	{
 		View view = inflater.inflate(R.layout.fragment_saved_video, container, false);
 		mListView = (ListView) view.findViewById(R.id.listView_SavedVideo);
-		initVideoList();
+		initVideoList(false);
 		return view;
 	}
 
-	private void initVideoList()
+	private void initVideoList(boolean update)
 	{
 		File file = new File(Utils.getOutputPath());
 		if (file.exists() && file.isDirectory() && file.canWrite())
 		{
 			ArrayList<File> videoPath_list = new ArrayList<>();
 			videoPath_list.add(file);
-			new ListVideoThread(getActivity(), mVideoListHandler, videoPath_list, Utils.MSG_ARG_SAVED_VIDEO).start();
+			new ListVideoThread(getActivity(), mVideoListHandler, videoPath_list, Utils.MSG_ARG_SAVED_VIDEO, update).start();
 		}
 	}
 
@@ -75,14 +76,18 @@ public class SavedVideo_Fragment extends VideoListFragment
 								savedVideo_fragment.mVideoInfoList,
 								Utils.MSG_ARG_SAVED_VIDEO));
 				savedVideo_fragment.updateTitle();
+				if (msg.getData().getBoolean(Utils.MSG_IS_UPDATE))
+				{
+					SnackBarToast.showDefaultSnackBarToast_Short(savedVideo_fragment.mListView,savedVideo_fragment.getString(R.string.Update_VideoList_Successed));
+				}
 			}
 		}
 	}
 
 	@Override
-	public void reLoadVideoList()
+	public void reLoadVideoList(boolean update)
 	{
-		initVideoList();
+		initVideoList(update);
 	}
 
 	@Override

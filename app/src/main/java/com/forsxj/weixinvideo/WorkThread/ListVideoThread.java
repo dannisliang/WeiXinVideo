@@ -21,14 +21,16 @@ public class ListVideoThread extends Thread
 	private Handler mHandler;
 	private int mArg;
 	private Context mContext;
+	private boolean mUpdate;
 
 	//arg表示哪个ListView 0或1
-	public ListVideoThread(Context context, Handler handler, ArrayList<File> videoFolders, int arg)
+	public ListVideoThread(Context context, Handler handler, ArrayList<File> videoFolders, int arg, boolean update)
 	{
 		this.mVideoFolders = videoFolders;
 		this.mHandler = handler;
 		this.mArg = arg;
 		this.mContext = context;
+		this.mUpdate = update;
 	}
 
 	@Override
@@ -75,6 +77,7 @@ public class ListVideoThread extends Thread
 				message.what = Utils.MSG_ACTION_UPDATE_SUCCESS;
 				message.arg1 = mArg;
 				Bundle bundle = new Bundle();
+				bundle.putBoolean(Utils.MSG_IS_UPDATE,mUpdate);//是否是手动刷新，手动刷新完后要显示提示
 				bundle.putSerializable(Utils.MSG_CONTENT_VIDEO_INFO_LIST, videoInfoList);
 				message.setData(bundle);
 				message.sendToTarget();

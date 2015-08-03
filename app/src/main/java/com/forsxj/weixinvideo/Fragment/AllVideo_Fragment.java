@@ -36,12 +36,6 @@ public class AllVideo_Fragment extends VideoListFragment implements AllVideoList
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-	}
-
-	@Override
 	public ListView getListView()
 	{
 		return mListView;
@@ -79,11 +73,16 @@ public class AllVideo_Fragment extends VideoListFragment implements AllVideoList
 				allVideo_fragment.mVideoInfoList = GetVideoInfoListFromMsg.getVideoInfoListFromMsg(msg, Utils.MSG_CONTENT_VIDEO_INFO_LIST);
 				allVideo_fragment.mListView.setAdapter(new AllVideoAdapter(allVideo_fragment.getActivity(), allVideo_fragment.mVideoInfoList, Utils.MSG_ARG_ALL_VIDEO));
 				allVideo_fragment.updateTitle();
+				if (msg.getData().getBoolean(Utils.MSG_IS_UPDATE))
+				{
+					SnackBarToast.showDefaultSnackBarToast_Short(allVideo_fragment.mListView,allVideo_fragment.getString(R.string.Update_VideoList_Successed));
+				}
 			}
 		}
 	}
 
-	private void initVideoList()
+	//加载视频列表,update--是自动加载还是手动刷新
+	private void initVideoList(boolean update)
 	{
 		String videoFolderPath = Utils.getWeiXinVideoPath();
 		File file_VideoFolderPath = new File(videoFolderPath);
@@ -113,7 +112,7 @@ public class AllVideo_Fragment extends VideoListFragment implements AllVideoList
 			SnackBarToast.showDefaultSnackBarToast_Short(mListView, getString(R.string.Video_Folder_NoFound));
 			return;
 		}
-		new ListVideoThread(getActivity(), mVideoListHandler, videoPath_Found, Utils.MSG_ARG_ALL_VIDEO).start();
+		new ListVideoThread(getActivity(), mVideoListHandler, videoPath_Found, Utils.MSG_ARG_ALL_VIDEO, update).start();
 	}
 
 	@Override
@@ -122,14 +121,14 @@ public class AllVideo_Fragment extends VideoListFragment implements AllVideoList
 	{
 		View view = inflater.inflate(R.layout.fragment_all_video, container, false);
 		mListView = (ListView) view.findViewById(R.id.listView_AllVideo);
-		initVideoList();
+		initVideoList(false);
 		return view;
 	}
 
 	@Override
-	public void reLoadVideoList()
+	public void reLoadVideoList(boolean update)
 	{
-		initVideoList();
+		initVideoList(update);
 	}
 
 	@Override

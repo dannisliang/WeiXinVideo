@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity
 					}
 					break;
 				case R.id.menu_item_update:
-					mFragments.get(which_listView).reLoadVideoList();
+					mFragments.get(which_listView).reLoadVideoList(true);
 					break;
 			}
 			mFab_menu.close(true);
@@ -202,17 +202,17 @@ public class MainActivity extends AppCompatActivity
 					break;
 				case SaveVideoThread.OUTPUT_FILE_SUCCESS:
 					mainActivity.closeProgressBar();
-					mainActivity.mFragments.get(1).reLoadVideoList();
+					mainActivity.mFragments.get(1).reLoadVideoList(true);
 					SnackBarToast.showDefaultSnackBarToast_Short(mainActivity.mFab_menu, mainActivity.getString(R.string.Output_Successed));
 					break;
 				case SaveVideoThread.OUTPUT_FILE_CANCEL:
 					mainActivity.closeProgressBar();
-					mainActivity.mFragments.get(1).reLoadVideoList();
+					mainActivity.mFragments.get(1).reLoadVideoList(true);
 					SnackBarToast.showDefaultSnackBarToast_Short(mainActivity.mFab_menu, mainActivity.getString(R.string.Output_Canceled));
 					break;
 				case SaveVideoThread.OUTPUT_FILE_FAILED:
 					mainActivity.closeProgressBar();
-					mainActivity.mFragments.get(1).reLoadVideoList();
+					mainActivity.mFragments.get(1).reLoadVideoList(true);
 					SnackBarToast.showDefaultSnackBarToast_Short(mainActivity.mFab_menu,mainActivity.getString(R.string.Output_Failed));
 					break;
 				case SaveVideoThread.OUTPUT_FILE_PROGRESS:

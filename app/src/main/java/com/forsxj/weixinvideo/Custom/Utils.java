@@ -22,8 +22,10 @@ public class Utils
 	public static final int MSG_ARG_ALL_VIDEO = 0;
 	public static final int MSG_ARG_SAVED_VIDEO = 1;
 	public static final int MSG_ACTION_CALL_FRAGMENT_UPDATE = 2;
+	public static final String MSG_IS_UPDATE = "MSG_IS_UPDATE";
 	public static final String MSG_CONTENT_VIDEO_INFO_LIST = "MSG_CONTENT_VIDEO_INFO_LIST";
 	private static final String OUTPUT_FOLDER = "/WeiXin_Video_Output/";
+
 	public static String getInternalRootDirectoryPath()
 	{
 		return Environment.getExternalStorageDirectory().getAbsolutePath();
