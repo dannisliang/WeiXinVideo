@@ -12,18 +12,25 @@ public class VideoInfo implements Serializable
 	private String mFileName;//全路径名称
 	private String mVideoName;//视频名称
 	private String mVideoSize;//文件大小
+	private String mVideoMD5;//文件MD5
 	private Calendar mVideoTime;//文件创建时间，在复制文件后还原文件原始创建时间
 	private boolean mSelected;
 	private Context mContext;
 
-	public VideoInfo(Context context, String fileName, String videoName, String videoSize, Calendar videoTime, boolean selected)
+	public VideoInfo(Context context, String fileName, String videoName, String videoSize, String videoMD5, Calendar videoTime, boolean selected)
 	{
 		this.mFileName = fileName;
 		this.mVideoName = videoName;
 		this.mVideoSize = videoSize;
+		this.mVideoMD5 = videoMD5;
 		this.mVideoTime = videoTime;
 		this.mSelected = selected;
 		this.mContext = context;
+	}
+
+	public String getVideoMD5()
+	{
+		return mVideoMD5;
 	}
 
 	public String getFileName()

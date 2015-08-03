@@ -67,7 +67,8 @@ public class ListVideoThread extends Thread
 				{
 					e.printStackTrace();
 				}
-				VideoInfo videoInfo = new VideoInfo(mContext, videoFilename, videoName, videoSize, videoTime, false);
+				String videoMD5 = Utils.getVidefoMD5(videoFile);
+				VideoInfo videoInfo = new VideoInfo(mContext, videoFilename, videoName, videoSize, videoMD5, videoTime, false);
 				videoInfoList.add(videoInfo);
 			}
 			//通知fragment绑定数据

@@ -39,7 +39,7 @@ public class Utils
 	}
 
 	//根据文件大小，耗时不同，最好放在线程中运行
-	public String getVidefoMD5(File file)
+	public static String getVidefoMD5(File file)
 	{
 		String value = null;
 		FileInputStream fis = null;
