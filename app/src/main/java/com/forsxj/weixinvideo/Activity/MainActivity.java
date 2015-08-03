@@ -20,6 +20,7 @@ import com.forsxj.weixinvideo.Custom.VideoListFragment;
 import com.forsxj.weixinvideo.Fragment.AllVideo_Fragment;
 import com.forsxj.weixinvideo.Fragment.SavedVideo_Fragment;
 import com.forsxj.weixinvideo.R;
+import com.forsxj.weixinvideo.WorkThread.ListVideoThread;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity
 	private FloatingActionButton mFab_save;
 	private FloatingActionButton mFab_sync;
 	private MainHandler mHandler;
+	private TabLayout mTabLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -56,15 +58,15 @@ public class MainActivity extends AppCompatActivity
 		mFab_sync = (FloatingActionButton) findViewById(R.id.menu_item_sync);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		mViewPager = (ViewPager) findViewById(R.id.viewPager);
-		TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+		mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
 		//set toolbar
 		toolbar.setTitle(getResources().getString(R.string.app_name));
 		setSupportActionBar(toolbar);//取代ActionBar
 		//set viewpager
 		initViewPager(mViewPager);
 		//set tabLayout
-		tabLayout.setFillViewport(true);
-		tabLayout.setupWithViewPager(mViewPager);
+		mTabLayout.setFillViewport(true);
+		mTabLayout.setupWithViewPager(mViewPager);
 		//set Fab
 		Fab_del.setOnClickListener(new Fab_Menu_Item_OnClickListener());
 		Fab_selectAll.setOnClickListener(new Fab_Menu_Item_OnClickListener());
@@ -175,7 +177,14 @@ public class MainActivity extends AppCompatActivity
 		@Override
 		public void handleMessage(Message msg, MainActivity mainActivity)
 		{
-
+			if (msg.what == ListVideoThread.MSG_ACTION_UPDATE_TITLES)
+			{
+				String[] titles = mainActivity.getResources().getStringArray(R.array.ViewPager_Titles);
+				if (titles != null && msg.arg1 <= titles.length - 1)
+				{
+					mainActivity.mTabLayout.getTabAt(msg.arg1).setText(titles[msg.arg1] + msg.obj);
+				}
+			}
 		}
 	}
 

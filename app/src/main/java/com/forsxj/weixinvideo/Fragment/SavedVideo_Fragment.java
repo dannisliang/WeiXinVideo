@@ -71,6 +71,7 @@ public class SavedVideo_Fragment extends VideoListFragment
 			{
 				savedVideo_fragment.mVideoInfoList = GetVideoInfoListFromMsg.getVideoInfoListFromMsg(msg,ListVideoThread.MSG_CONTENT_VIDEO_INFO_LIST);
 				savedVideo_fragment.mListView.setAdapter(new AllVideoAdapter(savedVideo_fragment.getActivity(), savedVideo_fragment.mVideoInfoList));
+				savedVideo_fragment.updateTitle();
 			}
 		}
 	}
@@ -79,5 +80,11 @@ public class SavedVideo_Fragment extends VideoListFragment
 	public void reLoadVideoList()
 	{
 		initVideoList();
+	}
+
+	@Override
+	public int getArg()
+	{
+		return ListVideoThread.MSG_ARG_SAVED_VIDEO;
 	}
 }

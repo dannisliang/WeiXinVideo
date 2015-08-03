@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.forsxj.weixinvideo.R;
 import com.forsxj.weixinvideo.Bean.VideoInfo;
+import com.forsxj.weixinvideo.R;
 
 import java.util.ArrayList;
 
@@ -76,21 +76,10 @@ public class AllVideoAdapter extends BaseAdapter
 			public void onClick(View v)
 			{
 				mVideoInfoList.get(position).setSelected(((CheckBox) v).isChecked());
+
 			}
 		});
 		return convertView;
-	}
-
-	public void setAdapter(ArrayList<VideoInfo> videoInfoList)
-	{
-		this.mVideoInfoList.clear();
-		if (videoInfoList.size() > 0)
-		{
-			for (int i = 0; i < videoInfoList.size(); i++)
-			{
-				mVideoInfoList.add(videoInfoList.get(i));
-			}
-		}
 	}
 
 	private class ViewHolder

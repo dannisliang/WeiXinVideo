@@ -5,4 +5,9 @@
 
     <string name="ViewPager_Title_0">微信视频</string>
     <string name="ViewPager_Title_1">存档目录</string>
+
+    <array name="ViewPager_Titles">
+        <item>微信视频(0/0)</item>
+        <item>存档目录(0/0)</item>
+    </array>
 </resources>

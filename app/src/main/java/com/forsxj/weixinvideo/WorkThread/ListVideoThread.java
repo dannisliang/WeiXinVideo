@@ -20,13 +20,15 @@ public class ListVideoThread extends Thread
 	private Handler mHandler;
 	private int mArg;
 	public static final int MSG_ACTION_UPDATE_SUCCESS = 0;
+	public static final int MSG_ACTION_UPDATE_TITLES = 1;
 	public static final int MSG_ARG_ALL_VIDEO = 0;
 	public static final int MSG_ARG_SAVED_VIDEO = 1;
-//	public static final int MSG_ACTION_UPDATE_FAILE = 1;
+	//	public static final int MSG_ACTION_UPDATE_FAILE = 1;
 //	public static final int MSG_ACTION_UPDATE_NO_NEW_DATA = 2;
 	public static final String MSG_CONTENT_VIDEO_INFO_LIST = "MSG_CONTENT_VIDEO_INFO_LIST";
 
-	public ListVideoThread(Handler handler, ArrayList<File> videoFolders ,int arg)
+	//arg表示哪个ListView 0或1
+	public ListVideoThread(Handler handler, ArrayList<File> videoFolders, int arg)
 	{
 		this.mVideoFolders = videoFolders;
 		this.mHandler = handler;
@@ -72,6 +74,7 @@ public class ListVideoThread extends Thread
 					VideoInfo videoInfo = new VideoInfo(videoFilename, videoName, videoSize, videoTime, false);
 					videoInfoList.add(videoInfo);
 				}
+				//通知fragment绑定数据
 				Message message = mHandler.obtainMessage();
 				message.what = MSG_ACTION_UPDATE_SUCCESS;
 				message.arg1 = mArg;

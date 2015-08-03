@@ -73,6 +73,7 @@ public class AllVideo_Fragment extends VideoListFragment implements AllVideoList
 			{
 				allVideo_fragment.mVideoInfoList = GetVideoInfoListFromMsg.getVideoInfoListFromMsg(msg, ListVideoThread.MSG_CONTENT_VIDEO_INFO_LIST);
 				allVideo_fragment.mListView.setAdapter(new AllVideoAdapter(allVideo_fragment.getActivity(), allVideo_fragment.mVideoInfoList));
+				allVideo_fragment.updateTitle();
 			}
 		}
 	}
@@ -124,5 +125,11 @@ public class AllVideo_Fragment extends VideoListFragment implements AllVideoList
 	public void reLoadVideoList()
 	{
 		initVideoList();
+	}
+
+	@Override
+	public int getArg()
+	{
+		return ListVideoThread.MSG_ARG_ALL_VIDEO;
 	}
 }
