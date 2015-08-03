@@ -83,7 +83,6 @@ public class SaveVideoThread extends Thread
 				}
 			}
 		}
-		setSrcFileTimeToNewFile(srcFile, newFile);//将文件原始时间写入新文件
 		return true;
 	}
 
@@ -136,14 +135,6 @@ public class SaveVideoThread extends Thread
 			sendMessage(OUTPUT_FILE_PROGRESS, i);
 		}
 		sendMessage(OUTPUT_FILE_SUCCESS);//复制文件成功
-	}
-
-	//将文件原始时间写入新文件
-	private boolean setSrcFileTimeToNewFile(File srcFile, File newFile)
-	{
-		return (srcFile.isFile() && srcFile.exists() && srcFile.canRead()
-				&& newFile.isFile() && newFile.exists() && newFile.canWrite())
-				&& newFile.setLastModified(srcFile.lastModified());
 	}
 
 	//取消文件复制

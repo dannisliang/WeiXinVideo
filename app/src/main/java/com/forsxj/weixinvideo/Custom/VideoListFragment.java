@@ -18,9 +18,7 @@ import java.util.List;
 public abstract class VideoListFragment extends Fragment
 {
 	abstract public ListView getListView();
-
 	abstract public void reLoadVideoList();
-
 	abstract public int getArg();
 
 	public VideoListFragment()

@@ -60,11 +60,15 @@ public class VideoInfo implements Serializable
 
 	public String getVideoTime()
 	{
+		int min = mVideoTime.get(Calendar.MINUTE);
+		String minStr = min < 10 ? "0" + String.valueOf(min) : String.valueOf(min);
+		int second = mVideoTime.get(Calendar.SECOND);
+		String secondStr = second < 10 ? "0" + String.valueOf(second) : String.valueOf(second);
 		return mContext.getString(R.string.File_Time) + mVideoTime.get(Calendar.YEAR) + "/" +
 				String.valueOf(mVideoTime.get(Calendar.MONTH) + 1) + "/" +
 				mVideoTime.get(Calendar.DAY_OF_MONTH) + " " +
 				mVideoTime.get(Calendar.HOUR_OF_DAY) + ":" +
-				mVideoTime.get(Calendar.MINUTE) + ":" +
-				mVideoTime.get(Calendar.SECOND);
+				minStr + ":" +
+				secondStr;
 	}
 }

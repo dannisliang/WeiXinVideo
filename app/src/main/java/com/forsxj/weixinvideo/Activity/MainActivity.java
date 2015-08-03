@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity
 	private ViewPager mViewPager;
 	private FloatingActionButton mFab_save;
 	private FloatingActionButton mFab_sync;
-	private FloatingActionButton mFab_update;
 	private TabLayout mTabLayout;
 
 	@Override
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity
 		FloatingActionButton Fab_cancelAll = (FloatingActionButton) findViewById(R.id.menu_item_cancelAll);
 		mFab_save = (FloatingActionButton) findViewById(R.id.menu_item_save);
 		mFab_sync = (FloatingActionButton) findViewById(R.id.menu_item_sync);
-		mFab_update = (FloatingActionButton) findViewById(R.id.menu_item_update);
+		FloatingActionButton Fab_update = (FloatingActionButton) findViewById(R.id.menu_item_update);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		mViewPager = (ViewPager) findViewById(R.id.viewPager);
 		mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -76,7 +75,7 @@ public class MainActivity extends AppCompatActivity
 		Fab_cancelAll.setOnClickListener(new Fab_Menu_Item_OnClickListener());
 		mFab_save.setOnClickListener(new Fab_Menu_Item_OnClickListener());
 		mFab_sync.setOnClickListener(new Fab_Menu_Item_OnClickListener());
-		mFab_update.setOnClickListener(new Fab_Menu_Item_OnClickListener());
+		Fab_update.setOnClickListener(new Fab_Menu_Item_OnClickListener());
 	}
 
 	private class Fab_Menu_Item_OnClickListener implements View.OnClickListener
@@ -135,13 +134,11 @@ public class MainActivity extends AppCompatActivity
 				{
 					mFab_save.setVisibility(View.VISIBLE);
 					mFab_sync.setVisibility(View.VISIBLE);
-					mFab_update.setVisibility(View.VISIBLE);
 				}
 				else
 				{
 					mFab_save.setVisibility(View.GONE);
 					mFab_sync.setVisibility(View.GONE);
-					mFab_update.setVisibility(View.GONE);
 				}
 			}
 
@@ -205,14 +202,17 @@ public class MainActivity extends AppCompatActivity
 					break;
 				case SaveVideoThread.OUTPUT_FILE_SUCCESS:
 					mainActivity.closeProgressBar();
-					SnackBarToast.showDefaultSnackBarToast_Short(mainActivity.mFab_menu,mainActivity.getString(R.string.Output_Successed));
+					mainActivity.mFragments.get(1).reLoadVideoList();
+					SnackBarToast.showDefaultSnackBarToast_Short(mainActivity.mFab_menu, mainActivity.getString(R.string.Output_Successed));
 					break;
 				case SaveVideoThread.OUTPUT_FILE_CANCEL:
 					mainActivity.closeProgressBar();
-					SnackBarToast.showDefaultSnackBarToast_Short(mainActivity.mFab_menu,mainActivity.getString(R.string.Output_Canceled));
+					mainActivity.mFragments.get(1).reLoadVideoList();
+					SnackBarToast.showDefaultSnackBarToast_Short(mainActivity.mFab_menu, mainActivity.getString(R.string.Output_Canceled));
 					break;
 				case SaveVideoThread.OUTPUT_FILE_FAILED:
 					mainActivity.closeProgressBar();
+					mainActivity.mFragments.get(1).reLoadVideoList();
 					SnackBarToast.showDefaultSnackBarToast_Short(mainActivity.mFab_menu,mainActivity.getString(R.string.Output_Failed));
 					break;
 				case SaveVideoThread.OUTPUT_FILE_PROGRESS:
