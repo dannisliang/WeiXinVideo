@@ -6,6 +6,7 @@
     <string name="Please_Select_Output_Video">请选择要导出的视频！</string>
     <string name="Video_Folder_NoFound">没有找到微信视频目录！</string>
     <string name="No_VideoFile_To_Delete">没有可供删除的文件！</string>
+    <string name="Selected_VideoFiles_Delete">所选视频删除完成！</string>
     <string name="No_VideoFile_Select">没有选中文件！</string>
     <string name="Sure_To_Delete">确定要删除吗？</string>
     <string name="Sure_To_Quit">确定要退出程序吗？</string>

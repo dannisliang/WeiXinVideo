@@ -47,41 +47,38 @@ public class ListVideoThread extends Thread
 					return !(pathname.isDirectory() || !pathname.canRead()) && pathname.getName().endsWith(".mp4");
 				}
 			});
-			if (videoFiles.length > 0)
+			for (File videoFile : videoFiles)
 			{
-				for (File videoFile : videoFiles)
+				String videoSize = "";
+				String videoName = videoFile.getName();
+				String videoFilename = videoFile.getAbsolutePath();
+				Calendar videoTime = Calendar.getInstance();
+				videoTime.setTime(new Date(videoFile.lastModified()));
+				float videoLength;
+				try
 				{
-					String videoSize = "";
-					String videoName = videoFile.getName();
-					String videoFilename = videoFile.getAbsolutePath();
-					Calendar videoTime = Calendar.getInstance();
-					videoTime.setTime(new Date(videoFile.lastModified()));
-					float videoLength;
-					try
-					{
-						RandomAccessFile file = new RandomAccessFile(videoFilename, "rw");
-						videoLength = file.length() / 1024;//KB
-						boolean isMB = videoLength > 1024;
-						videoSize = Utils.getReservedDecimal(isMB ? videoLength / 1024 : videoLength, isMB ? 1 : 0)
-								+ (isMB ? "MB" : "KB");
-					}
-					catch (Exception e)
-					{
-						e.printStackTrace();
-					}
-					VideoInfo videoInfo = new VideoInfo(mContext, videoFilename, videoName, videoSize, videoTime, false);
-					videoInfoList.add(videoInfo);
+					RandomAccessFile file = new RandomAccessFile(videoFilename, "rw");
+					videoLength = file.length() / 1024;//KB
+					boolean isMB = videoLength > 1024;
+					videoSize = Utils.getReservedDecimal(isMB ? videoLength / 1024 : videoLength, isMB ? 1 : 0)
+							+ (isMB ? "MB" : "KB");
 				}
-				//通知fragment绑定数据
-				Message message = mHandler.obtainMessage();
-				message.what = Utils.MSG_ACTION_UPDATE_SUCCESS;
-				message.arg1 = mArg;
-				Bundle bundle = new Bundle();
-				bundle.putBoolean(Utils.MSG_IS_UPDATE,mUpdate);//是否是手动刷新，手动刷新完后要显示提示
-				bundle.putSerializable(Utils.MSG_CONTENT_VIDEO_INFO_LIST, videoInfoList);
-				message.setData(bundle);
-				message.sendToTarget();
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+				VideoInfo videoInfo = new VideoInfo(mContext, videoFilename, videoName, videoSize, videoTime, false);
+				videoInfoList.add(videoInfo);
 			}
+			//通知fragment绑定数据
+			Message message = mHandler.obtainMessage();
+			message.what = Utils.MSG_ACTION_UPDATE_SUCCESS;
+			message.arg1 = mArg;
+			Bundle bundle = new Bundle();
+			bundle.putBoolean(Utils.MSG_IS_UPDATE,mUpdate);//是否是手动刷新，手动刷新完后要显示提示
+			bundle.putSerializable(Utils.MSG_CONTENT_VIDEO_INFO_LIST, videoInfoList);
+			message.setData(bundle);
+			message.sendToTarget();
 		}
 	}
 }

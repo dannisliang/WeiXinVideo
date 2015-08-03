@@ -78,18 +78,29 @@ public abstract class VideoListFragment extends Fragment
 				SnackBarToast.showDefaultSnackBarToast_Short(getListView(), getString(R.string.No_VideoFile_Select));
 				return;
 			}
-			Snackbar snackbar = Snackbar.make(getListView(), getString(R.string.Sure_To_Delete), Snackbar.LENGTH_SHORT)
+			Snackbar snackbar = Snackbar.make(getListView(), getString(R.string.Sure_To_Delete), Snackbar.LENGTH_LONG)
 					.setAction(getActivity().getString(R.string.OK), new View.OnClickListener()
 					{
 						@Override
 						public void onClick(View v)
 						{
+							int j = 0;//删除失败的文件个数
 							//开始删除时不允许打开菜单
 							for (int i = 0; i < selectedVideo.size(); i++)
 							{
-								selectedVideo.get(i).delete();
+								boolean b = selectedVideo.get(i).delete();
+								if (!b)
+								{
+									j++;
+								}
 							}
-							reLoadVideoList(true);
+							reLoadVideoList(false);
+							if (j == 0)
+							{
+								SnackBarToast.showDefaultSnackBarToast_Short(v, "有" + j + "个文件删除失败！");
+								return;
+							}
+							SnackBarToast.showDefaultSnackBarToast_Short(v, getString(R.string.Selected_VideoFiles_Delete));
 						}
 					});
 			snackbar.show();

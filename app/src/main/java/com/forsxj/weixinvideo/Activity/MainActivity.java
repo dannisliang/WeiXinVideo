@@ -201,17 +201,17 @@ public class MainActivity extends AppCompatActivity
 					break;
 				case SaveVideoThread.OUTPUT_FILE_SUCCESS:
 					mainActivity.closeProgressBar();
-					mainActivity.mFragments.get(1).reLoadVideoList(true);
+					mainActivity.mFragments.get(1).reLoadVideoList(false);
 					SnackBarToast.showDefaultSnackBarToast_Short(mainActivity.mFab_menu, mainActivity.getString(R.string.Output_Successed));
 					break;
 				case SaveVideoThread.OUTPUT_FILE_CANCEL:
 					mainActivity.closeProgressBar();
-					mainActivity.mFragments.get(1).reLoadVideoList(true);
+					mainActivity.mFragments.get(1).reLoadVideoList(false);
 					SnackBarToast.showDefaultSnackBarToast_Short(mainActivity.mFab_menu, mainActivity.getString(R.string.Output_Canceled));
 					break;
 				case SaveVideoThread.OUTPUT_FILE_FAILED:
 					mainActivity.closeProgressBar();
-					mainActivity.mFragments.get(1).reLoadVideoList(true);
+					mainActivity.mFragments.get(1).reLoadVideoList(false);
 					SnackBarToast.showDefaultSnackBarToast_Short(mainActivity.mFab_menu,mainActivity.getString(R.string.Output_Failed));
 					break;
 				case SaveVideoThread.OUTPUT_FILE_PROGRESS:
