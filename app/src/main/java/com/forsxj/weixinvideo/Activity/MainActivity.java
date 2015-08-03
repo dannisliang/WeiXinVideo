@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity
 		Fab_cancelAll.setOnClickListener(new Fab_Menu_Item_OnClickListener());
 		mFab_save.setOnClickListener(new Fab_Menu_Item_OnClickListener());
 		mFab_sync.setOnClickListener(new Fab_Menu_Item_OnClickListener());
+		mFab_update.setOnClickListener(new Fab_Menu_Item_OnClickListener());
 	}
 
 	private class Fab_Menu_Item_OnClickListener implements View.OnClickListener
