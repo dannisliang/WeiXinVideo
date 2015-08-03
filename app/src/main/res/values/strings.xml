@@ -3,4 +3,6 @@
     <string name="action_settings">设置</string>
     <string name="title_activity_setting">SettingActivity</string>
 
+    <string name="ViewPager_Title_0">微信视频</string>
+    <string name="ViewPager_Title_1">存档目录</string>
 </resources>

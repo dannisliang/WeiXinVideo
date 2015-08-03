@@ -5,4 +5,7 @@
     <color name="TabIndicatorColor">#f4511e</color>
     <color name="TabSelectedTextColor">#FFFFFF</color>
     <color name="TabTextColor">#bdbdbd</color>
+    <color name="SnackBar_Background">#039be5</color>
+    <color name="SnackBar_Message">#FFFFFF</color>
+    <color name="SnackBar_ActionText">#f4511e</color>
 </resources>

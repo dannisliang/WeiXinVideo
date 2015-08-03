@@ -3,6 +3,7 @@ package com.forsxj.weixinvideo.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.forsxj.weixinvideo.Adapter.VideoPagerAdapter;
 import com.forsxj.weixinvideo.Custom.CApplication;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity
 	private FloatingActionButton mFab_save;
 	private FloatingActionButton mFab_sync;
 	private MainHandler mHandler;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -90,13 +93,13 @@ public class MainActivity extends AppCompatActivity
 				case R.id.menu_item_save:
 					if (which_listView == 0)
 					{
-						((AllVideo_Fragment)(mFragments.get(which_listView))).saveSelected();
+						((AllVideo_Fragment) (mFragments.get(which_listView))).saveSelected();
 					}
 					break;
 				case R.id.menu_item_sync:
 					if (which_listView == 0)
 					{
-						((AllVideo_Fragment)(mFragments.get(which_listView))).sync();
+						((AllVideo_Fragment) (mFragments.get(which_listView))).sync();
 					}
 					break;
 			}
@@ -129,6 +132,7 @@ public class MainActivity extends AppCompatActivity
 					mFab_save.setVisibility(View.GONE);
 					mFab_sync.setVisibility(View.GONE);
 				}
+				mFab_menu.close(true);
 			}
 
 			@Override
@@ -153,7 +157,8 @@ public class MainActivity extends AppCompatActivity
 		int id = item.getItemId();
 		if (id == R.id.action_settings)
 		{
-			startActivity(new Intent(MainActivity.this,SettingActivity.class));
+			startActivity(new Intent(MainActivity.this, SettingActivity.class));
+
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -172,5 +177,28 @@ public class MainActivity extends AppCompatActivity
 		{
 
 		}
+	}
+
+	@Override
+	public void onBackPressed()
+	{
+		Snackbar snackbar = Snackbar.make(mFab_menu, "确定要退出程序吗？", Snackbar.LENGTH_LONG).
+				setAction("确定", new View.OnClickListener()
+				{
+					@Override
+					public void onClick(View v)
+					{
+						finish();
+					}
+				});
+		View snackBarView = snackbar.getView();
+		snackBarView.setBackgroundColor(getResources().getColor(R.color.SnackBar_Background));
+		snackbar.setActionTextColor(getResources().getColor(R.color.SnackBar_ActionText));
+		TextView snackbar_text = (TextView) snackBarView.findViewById(android.support.design.R.id.snackbar_text);
+		if (snackbar_text != null)
+		{
+			snackbar_text.setTextColor(getResources().getColor(R.color.SnackBar_Message));
+		}
+		snackbar.show();
 	}
 }
