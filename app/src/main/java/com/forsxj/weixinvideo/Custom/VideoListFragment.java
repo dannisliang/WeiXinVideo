@@ -90,7 +90,6 @@ public abstract class VideoListFragment extends Fragment
 								selectedVideo.get(i).delete();
 							}
 							reLoadVideoList(true);
-							updateTitle();
 						}
 					});
 			snackbar.show();
